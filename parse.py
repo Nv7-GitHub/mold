@@ -18,7 +18,7 @@ while pos < len(tokens.code):
   if tokens.next_instr in instructions:
     instructions[tokens.next_instr]()
   else:
-    print("Unknown instruction: " + next_instr)
+    print("Unknown instruction: " + tokens.next_instr)
     exit(1)
 
 save()

@@ -6,11 +6,11 @@ line = 0
 next_instr = ""
 def next_instruction():
   global code, pos, next_instr, line
-  char = ""
-  if pos != 0:
-    if pos >= len(code)-1:
-      return True
+  if pos >= len(code)-1:
+    return True
 
+  char = code[pos]
+  if pos != 0:
     # Get to next line if not at top
     while char != "\n":
       char = code[pos]
@@ -23,6 +23,9 @@ def next_instruction():
   
   # Get to next char
   char = code[pos]
+  if char == "\n":
+    line += 1
+  
   while char == " " or char == "\t" or char == "\n":
     pos += 1
     if pos >= len(code)-1:

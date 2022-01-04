@@ -5,7 +5,7 @@ def ref(ref):
   global typ, code
   if ref.isnumeric():
     typ = "float"
-    code = float(ref)
+    code = str(float(ref))
     return
   
   typ = "string"
