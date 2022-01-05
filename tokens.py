@@ -52,7 +52,7 @@ def get_next_param():
   global code, pos, line
 
   # Get first char of param
-  char = " "
+  char = code[pos]
   while char == " ":
     pos += 1
     char = code[pos]

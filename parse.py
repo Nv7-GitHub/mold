@@ -9,6 +9,7 @@ tokens.code = read(tokens.file)
 
 instructions = {
   "print": print_instruction,
+  "set": set_instruction,
 }
 
 while pos < len(tokens.code):

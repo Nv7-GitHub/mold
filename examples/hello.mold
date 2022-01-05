@@ -1,2 +1,2 @@
-print 1
-print "Hello, World!"
+set abc "Hello, World!"
+print abc

@@ -1,13 +1,20 @@
 from lib import *
 import tokens
 top = read("top.c")
+code = ""
+
 fn = ""
 currFn = "main"
 currFnRetType = "int"
+variables = ""
+
+def addVar(code):
+  global variables
+  variables += code
 
 def addFn():
-  global top
-  top += currFnRetType + " " + currFn + "() {\n" + fn + "}\n"
+  global code
+  code += currFnRetType + " " + currFn + "() {\n" + fn + "}\n"
 
 def newFn(name):
   global currFnRetType, currFn, fn
@@ -21,6 +28,10 @@ def addCode(code):
   fn += "\t" + code
 
 def save():
+  global top
   addFn()
+  top += variables
+  top += "\n"
+  top += code
   with open("out.c", "w") as f:
     f.write(top)
