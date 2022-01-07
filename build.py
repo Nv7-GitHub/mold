@@ -9,7 +9,7 @@ def build():
     f.write(code)
     f.close()
 
-    os.system("cc `pkg-config --cflags --libs --static bdw-gc` " + f.name + " -o " + data.progname)
+    os.system("cc `pkg-config --cflags --libs --static bdw-gc` " + f.name + " -g -o " + data.progname)
 
     os.remove(f.name)
   print(code)

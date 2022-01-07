@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <strings.h>
+#include <execinfo.h>
 #include <gc.h>
 #include "uthash.h"
 
@@ -28,14 +29,18 @@ void mold_hash_set(struct hash_entry** table, char* key, char* value) {
   if (exists != NULL) {
     HASH_DEL(*table, exists);
     free(exists);
-  } else {
-    HASH_ADD_KEYPTR(hh, *table, v->key, strlen(v->key), v);
   }
+
+  HASH_ADD_KEYPTR(hh, *table, v->key, strlen(v->key), v);
 }
 
 char* mold_hash_get(struct hash_entry** table, char* key) {
   struct hash_entry* v = NULL;
   HASH_FIND_STR(*table, key, v);
+  if (v == NULL) {
+    printf("runtime error: dictionary key not found: %s\n", key);
+    exit(1);
+  }
   return v->val;
 }
 

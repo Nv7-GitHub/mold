@@ -1,11 +1,12 @@
 set a {} # Blank dictionary only
 setkey a "Hi" "Hello"
-setkey a "Value" "Hello, World!"
 
 set val ""
-
 getkey val a "Hi"
 print val
 
-getkey val a "Value"
+setkey a "Hi" "Cool!"
+getkey val a "Hi"
 print val
+
+getkey val a "Unknown"
