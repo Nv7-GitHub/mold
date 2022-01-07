@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <strings.h>
-#include <execinfo.h>
 #include <gc.h>
 #include "uthash.h"
 
