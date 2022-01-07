@@ -37,7 +37,7 @@ char* mold_hash_get(struct hash_entry** table, char* key) {
   struct hash_entry* v = NULL;
   HASH_FIND_STR(*table, key, v);
   if (v == NULL) {
-    printf("runtime error: dictionary key not found: %s\n", key);
+    printf("runtime error: dictionary key not found: \"%s\"\n", key);
     exit(1);
   }
   return v->val;
