@@ -7,7 +7,7 @@ fn = ""
 currFn = "main"
 currFnRetType = "int"
 variables = ""
-mainFn = ""
+mainFn = "\tGC_INIT();\n"
 
 def addVar(code):
   global variables
@@ -32,11 +32,10 @@ def addCode(code):
   fn += "\t#line " + str(tokens.line+1) + " \"" + tokens.file + "\"\n"
   fn += "\t" + code
 
-def save():
+def build_code():
   global top
   addFn()
   top += variables
   top += "\n"
   top += code
-  with open("out.c", "w") as f:
-    f.write(top)
+  return top

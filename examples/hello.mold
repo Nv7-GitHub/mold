@@ -1,2 +1,7 @@
-set abc "Hello, World!"
-print abc
+set hello "Hello, "
+set world "World!"
+
+set out ""
+concat out hello
+concat out world
+print out

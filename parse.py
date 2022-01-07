@@ -4,6 +4,7 @@ from tokens import *
 import tokens
 from instructions import *
 import data
+from build import *
 
 tokens.file = sys.argv[1]
 tokens.code = read(tokens.file)
@@ -16,6 +17,7 @@ instructions = {
   "mul": lambda: math_instruction("*"),
   "div": lambda: math_instruction("/"),
   "mod": lambda: math_instruction("%"),
+  "concat": concat_instruction,
 }
 
 while pos < len(tokens.code):
@@ -26,10 +28,10 @@ while pos < len(tokens.code):
     data.error = ""
     instructions[tokens.next_instr]()
     if data.error != "":
-      print(data.error)
+      print(tokens.file + ":" + tokens.line + ": " + data.error)
       exit(1)
   else:
-    print("Unknown instruction: " + tokens.next_instr)
+    print(tokens.file + ":" + tokens.line + ": " + "unknown instruction: " + tokens.next_instr)
     exit(1)
 
-save()
+build()

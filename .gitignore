@@ -154,3 +154,4 @@ cython_debug/
 # Output
 out.c
 a.out
+out
