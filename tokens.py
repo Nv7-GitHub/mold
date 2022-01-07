@@ -18,7 +18,6 @@ def next_instruction():
       if pos >= len(code)-1:
         return True
 
-    pos += 1
     line += 1
   
   # Get to next char
@@ -45,7 +44,6 @@ def next_instruction():
     char = code[pos]
     if char == "\n":
       line += 1
-
   return False
 
 def get_next_param():
@@ -90,4 +88,4 @@ def get_next_param():
   return param
 
 def is_paramend():
-  return pos >= len(code) or code[pos] == "\n"
+  return pos >= len(code) or code[pos] == "\n" or code[pos] == "#"

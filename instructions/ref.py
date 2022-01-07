@@ -6,6 +6,12 @@ ctyp = ""
 
 def ref(ref):
   global typ, ctyp, code
+  if ref == "{}":
+    typ = "dict"
+    ctyp = "struct hash_entry*"
+    code = "NULL"
+    return
+
   if ref.isnumeric():
     typ = "float"
     ctyp = "float"

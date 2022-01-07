@@ -1,0 +1,11 @@
+set a {} # Blank dictionary only
+setkey a "Hi" "Hello"
+setkey a "Value" "Hello, World!"
+
+set val ""
+
+getkey val a "Hi"
+print val
+
+getkey val a "Value"
+print val

@@ -1,6 +1,8 @@
 from lib import *
 import tokens
-top = read("top.c")
+import os
+
+top = read("top.c").replace("uthash.h", os.getcwd() + "/uthash.h")
 code = ""
 
 fn = ""
@@ -11,6 +13,7 @@ mainFn = "\tGC_INIT();\n"
 
 def addVar(code):
   global variables
+  variables += "#line " + str(tokens.line+1) + " \"" + tokens.file + "\"\n"
   variables += code
 
 def addFn():

@@ -12,7 +12,7 @@ def math_instruction(op):
     data.error = "unknown variable: " + var
     return
   if vartyps[var] != "float":
-    data.error = "urong type for variable: " + var
+    data.error = "wrong type for variable: " + var
     return
   if ref.typ != "float":
     data.error = "wrong type for math: " + ref.typ
