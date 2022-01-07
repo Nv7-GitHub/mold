@@ -7,19 +7,24 @@ fn = ""
 currFn = "main"
 currFnRetType = "int"
 variables = ""
+mainFn = ""
 
 def addVar(code):
   global variables
   variables += code
 
 def addFn():
-  global code
+  global code, currFn, currFnRetType, mainFn, fn
   code += currFnRetType + " " + currFn + "() {\n" + fn + "}\n"
+  currFnRetType = "int"
+  currFn = "main"
+  fn = mainFn
 
 def newFn(name):
-  global currFnRetType, currFn, fn
+  global currFnRetType, currFn, fn, mainFn
   currFnRetType = "void"
   currFn = name
+  mainFn = fn
   fn = ""
 
 def addCode(code):

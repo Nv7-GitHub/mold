@@ -1,0 +1,13 @@
+set a 1
+set b 2
+
+set c 0
+add c a
+add c b
+
+set d 1
+mul d a
+mul d b
+mul d c
+
+print d
