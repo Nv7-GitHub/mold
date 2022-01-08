@@ -70,3 +70,14 @@ char* mold_arg(float index) {
   return argval[ind];
 }
 
+char* mold_strind(char* str, float index) {
+  int ind = (int)index;
+  if (ind < 0 || ind >= strlen(str)) {
+    printf("runtime error: string index out of range: %d\n", ind);
+    exit(1);
+  }
+  char* out = GC_MALLOC(2);
+  memcpy(out, str + ind, 1);
+  return out;
+}
+

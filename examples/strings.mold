@@ -1,0 +1,17 @@
+# Strings
+set a "abc"
+print a
+
+# Concat
+set b "def"
+concat a b
+
+# Length
+set len 0
+length len a
+print len
+
+# Index
+set chr ""
+ind chr a 1 # Get 2nd char (b)
+print chr

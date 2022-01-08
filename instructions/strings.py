@@ -104,3 +104,29 @@ def arg_instruction():
     return
 
   addCode(var + " = mold_arg(" + ref.code + ");\n")
+
+# String index
+def ind_instruction():
+  var = get_next_param()
+  if not var in vartyps:
+    data.error = "unknown variable: " + var
+    return
+  if vartyps[var] != "string":
+    data.error = "wrong type for variable: " + var
+    return
+
+  val = get_next_param()
+  ref.ref(val)
+  if ref.typ != "string":
+    data.error = "wrong type for index: " + ref.typ
+    return
+  valcode = ref.code
+
+  ind = get_next_param()
+  ref.ref(ind)
+  if ref.typ != "float":
+    data.error = "wrong index type for ind: " + ref.typ
+    return
+
+  addCode(var + " = mold_strind(" + valcode + ", " + ref.code + ");\n")
+
