@@ -19,5 +19,32 @@ def math_instruction(op):
     return
   addCode(var + " " + op + "= " + ref.code + ";\n")
 
+def rand_instruction(is_int):
+  var = get_next_param()
+  if not var in vartyps:
+    data.error = "unknown variable: " + var
+    return
+  if vartyps[var] != "float":
+    data.error = "wrong type for variable: " + var
+    return
+  
+  low = get_next_param()
+  ref.ref(low)
+  if ref.typ != "float":
+    data.error = "wrong type for math: " + ref.typ
+    return
+  lowcode = ref.code  
 
+  high = get_next_param()
+  ref.ref(high)
+  if ref.typ != "float":
+    data.error = "wrong type for math: " + ref.typ
+    return
+  highcode = ref.code
+  
+  fn = "mold_rand"
+  if is_int:
+    fn = "mold_irand"
+  addCode(var + " = " + fn + "(" + lowcode + ", " + highcode + ");\n")
+  
   

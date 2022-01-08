@@ -11,3 +11,12 @@ mul d b
 mul d c
 
 print d
+
+# Random number generation
+set rnd 0
+
+irand rnd 0 10 # Integer rand
+print rnd
+
+rand rnd 0 10 # Float rand
+print rnd

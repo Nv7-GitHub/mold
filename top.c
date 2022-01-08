@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <time.h>
 #include <strings.h>
 #include <gc.h>
 #include "uthash.h"
-#include <stdbool.h>
 
 void mold_strcat(char** dst, char* src) {
   char* oldDst = *dst;
@@ -79,5 +80,16 @@ char* mold_strind(char* str, float index) {
   char* out = GC_MALLOC(2);
   memcpy(out, str + ind, 1);
   return out;
+}
+
+float mold_rand(float low, float high) {
+  float random = ((float) rand()) / (float) RAND_MAX;
+  return (random*(high-low)) + low;
+}
+
+float mold_irand(float l, float h) {
+  int low = (int)l;
+  int high = (int)h;
+  return (float)((rand() % (high - low + 1)) + low);
 }
 

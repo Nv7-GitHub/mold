@@ -5,7 +5,7 @@ import os
 top = read("top.c").replace("uthash.h", os.getcwd() + "/uthash.h")
 code = ""
 
-fn = "\targcnt = argc;\n\targval = argv;\n\n"
+fn = "\targcnt = argc;\n\targval = argv;\nsrand(time(0));\n\n"
 currFn = "main"
 currFnRetType = "int"
 variables = ""

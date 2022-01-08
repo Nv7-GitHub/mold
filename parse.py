@@ -39,6 +39,8 @@ instructions = {
   "itoa": itoa_instruction,
   "arg": arg_instruction,
   "ind": ind_instruction,
+  "rand": lambda: rand_instruction(False),
+  "irand": lambda: rand_instruction(True),
 }
 
 while pos < len(tokens.code):
