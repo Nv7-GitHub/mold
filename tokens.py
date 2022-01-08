@@ -1,3 +1,5 @@
+import sys
+
 code = ""
 file = ""
 pos = 0
@@ -15,10 +17,11 @@ def next_instruction():
     while char != "\n":
       char = code[pos]
       pos += 1
+      if char == "\n":
+        line += 1
       if pos >= len(code)-1:
         return True
 
-    line += 1
   
   # Get to next char
   char = code[pos]
@@ -40,7 +43,8 @@ def next_instruction():
     next_instr += char
     pos += 1
     if pos >= len(code)-1:
-      return True
+      next_instr += code[pos]
+      break
     char = code[pos]
     if char == "\n":
       line += 1

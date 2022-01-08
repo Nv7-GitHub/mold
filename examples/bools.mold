@@ -22,5 +22,3 @@ if cond
 else
   print "Bad"
 end
-
-# Comment
