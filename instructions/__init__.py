@@ -6,6 +6,7 @@ from instructions.dict import *
 from instructions.scope import *
 from instructions.proc import *
 from instructions.bools import *
+from instructions.blocks import *
 from tokens import *
 
 def comment_instruction():

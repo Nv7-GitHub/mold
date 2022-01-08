@@ -3,9 +3,8 @@ from instructions import ref
 import data
 from out import *
 from instructions.variables import vartyps
-import out
 
-def eq_instruction():
+def comp_instruction(op):
   var = get_next_param()
   if not var in vartyps:
     data.error = "unknown variable: " + var
@@ -29,37 +28,37 @@ def eq_instruction():
     return
 
   if typ1 == "float" or typ1 == "bool":
-    addCode(var + " = " + code1 + " == " + code2 + ";\n")
+    addCode(var + " = " + code1 + " " + op + " " + code2 + ";\n")
   if typ1 == "string":
-    addCode(var + " = mold_streq(" + code1 + ", " + code2 + ");\n")
+    addCode(var + " = strcmp(" + code1 + ", " + code2 + ") " + op + " 0;\n")
   if typ1 == "dict":
     data.error = "cannot compare dictionaries"
 
-done_else = False
-def if_instruction():
-  global done_else
+def not_instruction():
+  var = get_next_param()
+  if not var in vartyps:
+    data.error = "unknown variable: " + var
+    return
+  if vartyps[var] != "bool":
+    data.error = "wrong type for variable: " + var
+    return
 
-  cond = get_next_param()
-  ref.ref(cond)
+  addCode(var + " = !(" + var + ");\n")
+
+def logical_instruction(op):
+  var = get_next_param()
+  if not var in vartyps:
+    data.error = "unknown variable: " + var1
+    return
+  if vartyps[var] != "bool":
+    data.error = "wrong type for variable: " + var1
+    return
+
+  val = get_next_param()
+  ref.ref(val)
   if ref.typ != "bool":
-    data.error = "condition must be of type bool"
-    return
-  addCode("if (" + ref.code + ") {\n")
-  out.indent += 1
-  data.scopetype = "if"
-  done_else = False
-
-def else_instruction():
-  global done_else
-  if data.scopetype != "if":
-    data.error = "else must be inside if"
+    data.error = "value must be of type bool"
     return
 
-  if done_else:
-    data.error = "multiple else statements"
-    return
-  
-  out.indent -= 1
-  addCode("} else {\n")
-  out.indent += 1
-  
+  addCode(var + " = " + var + " " + op + " (" + ref.code + ");\n")
+

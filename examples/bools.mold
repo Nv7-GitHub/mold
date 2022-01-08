@@ -1,4 +1,5 @@
 # Equality demo
+print "Equality"
 set a 1
 set b 1
 set equal false
@@ -21,4 +22,19 @@ if cond
   print "Good"
 else
   print "Bad"
+end
+
+# While statements using while (i < 10) {i++}
+set i 1
+set target 10
+
+set cond false
+less cond i target
+
+while cond
+  print i
+
+  add i 1
+  set cond false
+  less cond i target
 end

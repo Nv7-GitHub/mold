@@ -12,10 +12,6 @@ void mold_strcat(char** dst, char* src) {
   strcat(*dst, src);
 }
 
-bool mold_streq(char* a, char* b) {
-  return strcmp(a, b) == 0;
-}
-
 struct hash_entry {
   char* key;
   char* val;

@@ -24,9 +24,15 @@ instructions = {
   "call": call_instruction,
   "end": end_instruction,
   "#": comment_instruction,
-  "eq": eq_instruction,
+  "eq": lambda: comp_instruction("=="),
+  "less": lambda: comp_instruction("<"),
+  "greater": lambda: comp_instruction(">"),
   "if": if_instruction,
   "else": else_instruction,
+  "not": not_instruction,
+  "and": lambda: logical_instruction("&&"),
+  "or": lambda: logical_instruction("||"),
+  "while": while_instruction,
 }
 
 while pos < len(tokens.code):
