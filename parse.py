@@ -20,6 +20,10 @@ instructions = {
   "concat": concat_instruction,
   "setkey": setkey_instruction,
   "getkey": getkey_instruction,
+  "proc": proc_instruction,
+  "call": call_instruction,
+  "end": end_instruction,
+  "#": comment_instruction,
 }
 
 while pos < len(tokens.code):

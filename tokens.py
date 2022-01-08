@@ -36,7 +36,7 @@ def next_instruction():
   # Get to end of instruction
   next_instr = ""
   char = code[pos]
-  while char != " ":
+  while char != " " and char != "\n":
     next_instr += char
     pos += 1
     if pos >= len(code)-1:

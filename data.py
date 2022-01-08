@@ -1,2 +1,3 @@
 error = ""
 progname = "out"
+scopetype = ""
