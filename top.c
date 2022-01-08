@@ -44,3 +44,18 @@ char* mold_hash_get(struct hash_entry** table, char* key) {
   return v->val;
 }
 
+char* mold_ftoa(float val) {
+  int len = snprintf(NULL, 0, "%f", val);
+  char* str = GC_MALLOC(len + 1);
+  snprintf(str, len + 1, "%f", val);
+  return str;
+}
+
+char* mold_itoa(float val) {
+  int len = snprintf(NULL, 0, "%d", (int)val);
+  char* str = GC_MALLOC(len + 1);
+  snprintf(str, len + 1, "%d", (int)val);
+  return str;
+}
+
+

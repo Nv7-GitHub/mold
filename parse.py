@@ -33,6 +33,10 @@ instructions = {
   "and": lambda: logical_instruction("&&"),
   "or": lambda: logical_instruction("||"),
   "while": while_instruction,
+  "length": length_instruction,
+  "ftoa": ftoa_instruction,
+  "atof": atof_instruction,
+  "itoa": itoa_instruction,
 }
 
 while pos < len(tokens.code):
