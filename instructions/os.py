@@ -9,3 +9,5 @@ def print_instruction():
     addCode("printf(\"%f\\n\", " + ref.code + ");\n")
   if ref.typ == "string":
     addCode("printf(\"%s\\n\", " + ref.code + ");\n")
+  if ref.typ == "bool":
+    addCode("puts(" + ref.code + " ? \"true\" : \"false\");\n")

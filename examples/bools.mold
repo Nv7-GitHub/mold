@@ -1,0 +1,10 @@
+set a 1
+set b 1
+set equal false
+
+eq equal a b
+print equal
+
+set b 2
+eq equal a b
+print equal

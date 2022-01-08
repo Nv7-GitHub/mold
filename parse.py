@@ -24,6 +24,7 @@ instructions = {
   "call": call_instruction,
   "end": end_instruction,
   "#": comment_instruction,
+  "eq": eq_instruction,
 }
 
 while pos < len(tokens.code):

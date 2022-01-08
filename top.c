@@ -3,12 +3,17 @@
 #include <strings.h>
 #include <gc.h>
 #include "uthash.h"
+#include <stdbool.h>
 
 void mold_strcat(char** dst, char* src) {
   char* oldDst = *dst;
   (*dst) = GC_MALLOC(strlen(oldDst) + strlen(src) + 1);
   strcpy(*dst, oldDst);
   strcat(*dst, src);
+}
+
+bool mold_streq(char* a, char* b) {
+  return strcmp(a, b) == 0;
 }
 
 struct hash_entry {
