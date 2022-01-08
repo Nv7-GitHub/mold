@@ -25,6 +25,8 @@ instructions = {
   "end": end_instruction,
   "#": comment_instruction,
   "eq": eq_instruction,
+  "if": if_instruction,
+  "else": else_instruction,
 }
 
 while pos < len(tokens.code):

@@ -1,3 +1,4 @@
+# Equality demo
 set a 1
 set b 1
 set equal false
@@ -8,3 +9,18 @@ print equal
 set b 2
 eq equal a b
 print equal
+
+# If statements, if (1 == 1)
+set a 1
+set b 1
+
+set cond false
+eq cond a b
+
+if cond
+  print "Good"
+else
+  print "Bad"
+end
+
+# Comment
