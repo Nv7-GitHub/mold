@@ -58,4 +58,15 @@ char* mold_itoa(float val) {
   return str;
 }
 
+int argcnt = 0;
+char** argval = NULL;
+
+char* mold_arg(float index) {
+  int ind = (int)index;
+  if (ind < 0 || ind >= argcnt) {
+    printf("runtime error: argument index out of range: %d\n", ind);
+    exit(1);
+  }
+  return argval[ind];
+}
 

@@ -1,0 +1,3 @@
+set argument  ""
+arg argument 0 # set argument to arg at index 0
+print argument

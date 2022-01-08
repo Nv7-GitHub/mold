@@ -5,7 +5,7 @@ import os
 top = read("top.c").replace("uthash.h", os.getcwd() + "/uthash.h")
 code = ""
 
-fn = ""
+fn = "\targcnt = argc;\n\targval = argv;\n\n"
 currFn = "main"
 currFnRetType = "int"
 variables = ""
@@ -21,7 +21,10 @@ def addVar(code):
 
 def addFn():
   global code, currFn, currFnRetType, mainFn, fn, indent, mainIndent
-  code += currFnRetType + " " + currFn + "() {\n" + fn + "}\n"
+  args = ""
+  if currFn == "main":
+    args = "int argc, char** argv"
+  code += currFnRetType + " " + currFn + "(" + args + ") {\n" + fn + "}\n"
   currFnRetType = "int"
 
   currFn = "main"

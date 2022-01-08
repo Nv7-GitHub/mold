@@ -86,3 +86,21 @@ def atof_instruction():
     return
   
   addCode(var + " = (float)atof(" + ref.code + ");\n")
+
+# Command line args
+def arg_instruction():
+  var = get_next_param()
+  if not var in vartyps:
+    data.error = "unknown variable: " + var
+    return
+  if vartyps[var] != "string":
+    data.error = "wrong type for variable: " + var
+    return
+
+  ind = get_next_param()
+  ref.ref(ind)
+  if ref.typ != "float":
+    data.error = "wrong index type for arg: " + ref.typ
+    return
+
+  addCode(var + " = mold_arg(" + ref.code + ");\n")

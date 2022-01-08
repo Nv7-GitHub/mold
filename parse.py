@@ -37,6 +37,7 @@ instructions = {
   "ftoa": ftoa_instruction,
   "atof": atof_instruction,
   "itoa": itoa_instruction,
+  "arg": arg_instruction,
 }
 
 while pos < len(tokens.code):
