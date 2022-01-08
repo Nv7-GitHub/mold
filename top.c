@@ -6,11 +6,41 @@
 #include <gc.h>
 #include "uthash.h"
 
-void mold_strcat(char** dst, char* src) {
-  char* oldDst = *dst;
-  (*dst) = GC_MALLOC(strlen(oldDst) + strlen(src) + 1);
-  strcpy(*dst, oldDst);
-  strcat(*dst, src);
+typedef struct string {
+  char* val;
+  int len;
+  int capacity;
+} string;
+
+string* mold_newstring(char* val) {
+  string* s = GC_MALLOC(sizeof(string));
+  char* v = GC_MALLOC(strlen(val)*2); // Alloc with 2x capacity
+  memcpy(v, val, strlen(val));
+  s->val = v;
+  s->len = strlen(val);
+  s->capacity = s->len*2;
+  return s;
+}
+
+char* mold_cstring(string* str) {
+  char* out = GC_MALLOC(str->len + 1);
+  memcpy(out, str->val, str->len);
+  return out;
+}
+
+void mold_resize_string(string* s) {
+  s->capacity *= 2;
+  char* newVal = GC_MALLOC(s->capacity);
+  memcpy(newVal, s->val, s->len);
+  s->val = newVal;
+}
+
+void mold_strcat(string* dst, string* src) {
+  if ((dst->len + src->len) > dst->capacity) {
+    mold_resize_string(dst);
+  }
+  memcpy(dst->val + dst->len, src->val, src->len);
+  dst->len += src->len;
 }
 
 struct hash_entry {
@@ -19,14 +49,14 @@ struct hash_entry {
   UT_hash_handle hh;
 };
 
-void mold_hash_set(struct hash_entry** table, char* key, char* value) {
+void mold_hash_set(struct hash_entry** table, string* key, string* value) {
   struct hash_entry* v = NULL;
   v = (struct hash_entry*) malloc(sizeof(*v));
-  v->key = key;
-  v->val = value;
+  v->key = mold_cstring(key);
+  v->val = mold_cstring(value);
   
   struct hash_entry* exists = NULL;
-  HASH_FIND_STR(*table, key, exists);
+  HASH_FIND_STR(*table, mold_cstring(key), exists);
   if (exists != NULL) {
     HASH_DEL(*table, exists);
     free(exists);
@@ -35,51 +65,56 @@ void mold_hash_set(struct hash_entry** table, char* key, char* value) {
   HASH_ADD_KEYPTR(hh, *table, v->key, strlen(v->key), v);
 }
 
-char* mold_hash_get(struct hash_entry** table, char* key) {
+string* mold_hash_get(struct hash_entry** table, string* key) {
   struct hash_entry* v = NULL;
-  HASH_FIND_STR(*table, key, v);
+  HASH_FIND_STR(*table, mold_cstring(key), v);
   if (v == NULL) {
-    printf("runtime error: dictionary key not found: \"%s\"\n", key);
+    printf("runtime error: dictionary key not found: \"%s\"\n", mold_cstring(key));
     exit(1);
   }
-  return v->val;
+  return mold_newstring(v->val);
 }
 
-char* mold_ftoa(float val) {
+string* mold_ftoa(float val) {
   int len = snprintf(NULL, 0, "%f", val);
   char* str = GC_MALLOC(len + 1);
   snprintf(str, len + 1, "%f", val);
-  return str;
+  return mold_newstring(str);
 }
 
-char* mold_itoa(float val) {
+string* mold_itoa(float val) {
   int len = snprintf(NULL, 0, "%d", (int)val);
   char* str = GC_MALLOC(len + 1);
   snprintf(str, len + 1, "%d", (int)val);
-  return str;
+  return mold_newstring(str);
 }
 
 int argcnt = 0;
 char** argval = NULL;
 
-char* mold_arg(float index) {
+string* mold_arg(float index) {
   int ind = (int)index;
   if (ind < 0 || ind >= argcnt) {
     printf("runtime error: argument index out of range: %d\n", ind);
     exit(1);
   }
-  return argval[ind];
+  return mold_newstring(argval[ind]);
 }
 
-char* mold_strind(char* str, float index) {
+string* mold_strind(string* str, float index) {
   int ind = (int)index;
-  if (ind < 0 || ind >= strlen(str)) {
+  if (ind < 0 || ind >= str->len) {
     printf("runtime error: string index out of range: %d\n", ind);
     exit(1);
   }
   char* out = GC_MALLOC(2);
-  memcpy(out, str + ind, 1);
-  return out;
+  memcpy(out, str->val + ind, 1);
+
+  string* s = GC_MALLOC(sizeof(string));
+  s->val = out;
+  s->len = 1;
+  s->capacity = 2;
+  return s;
 }
 
 float mold_rand(float low, float high) {

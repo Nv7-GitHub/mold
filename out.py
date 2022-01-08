@@ -5,7 +5,7 @@ import os
 top = read("top.c").replace("uthash.h", os.getcwd() + "/uthash.h")
 code = ""
 
-fn = "\targcnt = argc;\n\targval = argv;\nsrand(time(0));\n\n"
+fn = "\targcnt = argc;\n\targval = argv;\n\tsrand(time(0));\n\n"
 currFn = "main"
 currFnRetType = "int"
 variables = ""
@@ -43,7 +43,7 @@ def newFn(name):
 
 def addCode(code):
   global fn
-  fn += ("\t" * indent) + "#line " + str(tokens.line) + " \"" + tokens.file + "\"\n" # tokens.line + 1 would be current line, doing this so that it is current line when it reaches that line
+  fn += ("\t" * indent) + "#line " + str(tokens.line+1) + " \"" + tokens.file + "\"\n"
   fn += ("\t" * indent) + code
 
 def build_code():

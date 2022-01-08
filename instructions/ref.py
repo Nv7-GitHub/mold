@@ -39,5 +39,5 @@ def ref(ref):
     return
 
   typ = "string"
-  ctyp = "char*"
-  code = "\"" + ref + "\""
+  ctyp = "string*"
+  code = "mold_newstring(\"" + ref + "\")"

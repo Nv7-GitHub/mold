@@ -18,7 +18,7 @@ def concat_instruction():
     data.error = "wrong type for concat: " + ref.typ
     return
   
-  addCode("mold_strcat(&" + var + ", " + ref.code + ");\n")
+  addCode("mold_strcat(" + var + ", " + ref.code + ");\n")
 
 def length_instruction():
   var = get_next_param()
@@ -34,7 +34,7 @@ def length_instruction():
     data.error = "wrong type for length: " + ref.typ
     return
   
-  addCode(var + " = (float)strlen(" + ref.code + ");\n")
+  addCode(var + " = (float)(" + ref.code + "->len);\n")
 
 # Float to string
 def ftoa_instruction():
@@ -85,7 +85,7 @@ def atof_instruction():
     data.error = "wrong type for itoa: " + ref.typ
     return
   
-  addCode(var + " = (float)atof(" + ref.code + ");\n")
+  addCode(var + " = (float)atof(mold_cstring(" + ref.code + "));\n")
 
 # Command line args
 def arg_instruction():

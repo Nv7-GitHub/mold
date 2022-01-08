@@ -12,7 +12,6 @@ def set_instruction():
   if not name in vartyps:
     vartyps[name] = ref.typ
     varctyps[name] = ref.ctyp
-    addVar(ref.ctyp + " " + name + " = " + ref.code + ";\n")
-  else:
-    addCode(name + " = " + ref.code + ";\n")
+    addVar(ref.ctyp + " " + name + ";\n")
+  addCode(name + " = " + ref.code + ";\n")
   

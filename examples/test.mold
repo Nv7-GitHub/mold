@@ -1,0 +1,16 @@
+set out "Hello, World!"
+
+# Length instruction
+set toPrint "'"
+concat toPrint out
+concat toPrint "' is "
+
+set len 0
+length len out
+set len_str ""
+itoa len_str len # use ftoa for float
+
+concat toPrint len_str
+concat toPrint " characters."
+
+print toPrint

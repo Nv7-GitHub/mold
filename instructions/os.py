@@ -8,6 +8,6 @@ def print_instruction():
   if ref.typ == "float":
     addCode("printf(\"%f\\n\", " + ref.code + ");\n")
   if ref.typ == "string":
-    addCode("printf(\"%s\\n\", " + ref.code + ");\n")
+    addCode("printf(\"%s\\n\", mold_cstring(" + ref.code + "));\n")
   if ref.typ == "bool":
     addCode("puts(" + ref.code + " ? \"true\" : \"false\");\n")
