@@ -1,1 +1,5 @@
-python3 main.py main.mold mold > out.c && ./mold examples/simple.mold
+python3 main.py main.mold mold > mold.c
+echo "Built from Python"
+./mold examples/simple.mold out
+echo "Built from mold"
+./out

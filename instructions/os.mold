@@ -5,9 +5,17 @@ proc print_instruction
 
     switch ref_typ
     case "float"
-        print "printing float"
+        set addCode_code ""
+        concat addCode_code "printf(\\"%f\\n\", "
+        concat addCode_code ref_code
+        concat addCode_code ");\n"
+        call addCode
     
     case "string"
-        print "printing string"
+        set addCode_code ""
+        concat addCode_code "printf(\"%s\\n\", mold_cstring("
+        concat addCode_code ref_code
+        concat addCode_code "));\n"
+        call addCode
     end
 end

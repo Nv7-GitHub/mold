@@ -19,29 +19,67 @@ proc addVar
     concat out_variables addVar_code
 end
 
-# AddFn (saves fn to code)
+# AddFn (saves fn to out_code)
 proc addFn
     # Get argc if in main function
     set addFn_args ""
     set addFn_isMain false
-    eq out_currFn "main"
+    eq addFn_isMain out_currFn "main"
     if addFn_isMain
         set addFn_args "int argc, char **argv"
     end
 
-    # Save code
-    concat code out_currRetType
-    concat code " "
-    concat code out_currFn
-    concat code "("
-    concat code args
-    concat code ") {\n"
-    concat code out_fn
-    concat code "}\n\n"
+    # Save out_code
+    concat out_code out_currRetType
+    concat out_code " "
+    concat out_code out_currFn
+    concat out_code "("
+    concat out_code addFn_args
+    concat out_code ") {\n"
+    concat out_code out_fn
+    concat out_code "}\n\n"
 
     # Go back to main
     set out_currFn "main"
     set out_currRetType "int"
     set out_fn out_mainFn
     set out_indent out_mainFnIndent
+end
+
+# New Fn
+set newFn_name ""
+proc newFn
+    set out_currFnRetType "void"
+    set out_currFn newFn_name
+
+    set out_mainFn out_fn
+    set out_fn ""
+
+    set out_mainFnIndent out_indent
+    set out_indent 0
+end
+
+# Add out_code to fn
+set addCode_code ""
+proc addCode
+    # Add indents
+    set addCode_i 0
+    set addCode_cond false
+    less addCode_cond addCode_i out_indent
+    while addCode_cond
+        concat out_fn "\t"
+        add addCode_i 1
+        less addCode_cond addCode_i out_indent
+    end
+
+    # Add out_code
+    concat out_fn addCode_code
+end
+
+# Build out_code to top
+proc build
+    call addFn
+    concat out_top out_variables
+    concat out_top "\n"
+    concat out_top out_code
 end

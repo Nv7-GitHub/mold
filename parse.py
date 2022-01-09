@@ -64,6 +64,7 @@ def parse():
       data.error = ""
       instructions[tokens.next_instr]()
       if data.error != "":
+        print(tokens.next_instr)
         print(tokens.file + ":" + str(tokens.line) + ": " + data.error, file=sys.stderr)
         exit(1)
     else:

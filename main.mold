@@ -2,6 +2,7 @@ include data.mold
 include tokens.mold
 include nextinstr.mold
 include nextparam.mold
+include out.mold
 include instructions/ref.mold
 include instructions/os.mold
 include parse.mold
@@ -10,3 +11,13 @@ arg file 1
 read code file
 
 call parse
+call build
+
+write "out.c" out_top
+set build_output ""
+set build_cmd "cc `pkg-config --cflags --libs --static bdw-gc` out.c -o "
+set build_exec ""
+arg build_exec 2
+concat build_cmd build_exec
+cmd build_output build_cmd
+print build_output
