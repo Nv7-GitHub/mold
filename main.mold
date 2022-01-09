@@ -1,9 +1,16 @@
 include data.mold
 include tokens.mold
 include nextinstr.mold
+include nextparam.mold
 
 arg file 1
 read code file
 
 call next_instruction
 print next_instr
+
+call get_next_param
+print next_param
+
+call get_next_param
+print next_param

@@ -43,3 +43,22 @@ proc ischrspace
   or chrspace equaltab
 end
 
+proc is_paramend
+  set len 0
+  length len code
+  sub len 1
+  set paramend_outofrange false
+  greater paramend_outofrange pos len
+
+  call getchr
+  set paramend_endofline false
+  eq paramend_endofline chr "\n"
+
+  set paramend_comment false
+  eq paramend_comment chr "#"
+
+  set paramend_ret false
+  or paramend_ret paramend_outofrange
+  or paramend_ret paramend_endofline
+  or paramend_ret paramend_comment
+end

@@ -100,22 +100,32 @@ def get_next_param():
     if running:
       char = code[pos]
       canAdd = True
+      isEscape = False
 
-      # Quote Check
-      if char == "\"":
-        openQuote = not openQuote
-        canAdd = False
-      
-      # Check if at end
-      if (char == " " or char == "\n") and (not openQuote):
-        running = False
-        canAdd = False
-        if char == "\n":
-          line += 1
-      
-      # Add char to param
-      if canAdd:
+      # If escape char then ignore other stuff
+      if char == "\\":
         param += char
+        pos += 1
+        char = code[pos]
+        param += char
+        isEscape = True
+
+      if not isEscape:
+        # Quote Check
+        if char == "\"":
+          openQuote = not openQuote
+          canAdd = False
+        
+        # Check if at end
+        if (char == " " or char == "\n") and (not openQuote):
+          running = False
+          canAdd = False
+          if char == "\n":
+            line += 1
+        
+        # Add char to param
+        if canAdd:
+          param += char
       pos += 1
   return param
 

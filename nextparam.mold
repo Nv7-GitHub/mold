@@ -1,0 +1,52 @@
+set next_param ""
+proc get_next_param
+  # Get to first non-space
+  call getchr
+  call ischrspace
+  while chrspace
+    add pos 1
+    call getchr
+    call ischrspace
+  end
+
+  # Get param
+  set open_quote false
+  set running true
+  set next_param ""
+  while running
+    # TODO: Escape characters
+
+    # at end of param?
+    call is_paramend
+    if paramend_ret
+      set running false
+    end
+
+    # if not at end of param
+    if running
+      call getchr
+      set canadd true
+
+      set isquote false
+      eq isquote chr "\"" #"
+      if isquote
+        not open_quote
+        set canadd false
+      end
+
+      # Check if at end
+      call ischrspace
+      if chrspace
+        set running false
+        set canadd false
+        call checknewline
+      end
+
+      if canadd
+        concat next_param chr
+      end
+    end
+
+    add pos 1
+  end
+end
