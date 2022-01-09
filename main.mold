@@ -4,3 +4,6 @@ include nextinstr.mold
 
 arg file 1
 read code file
+
+call next_instruction
+print next_instr

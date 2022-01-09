@@ -30,7 +30,7 @@ def comp_instruction(op):
   if typ1 == "float" or typ1 == "bool":
     addCode(var + " = " + code1 + " " + op + " " + code2 + ";\n")
   if typ1 == "string":
-    addCode(var + " = strcmp(" + code1 + ", " + code2 + ") " + op + " 0;\n")
+    addCode(var + " = strcmp(mold_cstring(" + code1 + "), mold_cstring(" + code2 + ")) " + op + " 0;\n")
   if typ1 == "dict":
     data.error = "cannot compare dictionaries"
 

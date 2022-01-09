@@ -3,6 +3,9 @@ set file ""
 set pos 0
 set line 0
 
+set chr ""
+set chrspace false
+
 set outofrange false
 proc checkbounds
   set len 0
@@ -14,30 +17,29 @@ end
 
 proc checknewline
   set cond false
-  eq cond char "\n"
+  eq cond chr "\n"
   if cond
     add line 1
   end
 end
 
-proc getchar
-  ind char code pos
+proc getchr
+  ind chr code pos
 end
 
-set isspace false
-proc ischarspace
+proc ischrspace
   set equalspace false
   set equalnewline false
   set equaltab false
 
-  set isspace false
+  set chrspace false
 
-  eq equalspace char " "
-  eq equalnewline char "\n"
-  eq equaltab char "\t"
+  eq equalspace chr " "
+  eq equalnewline chr "\n"
+  eq equaltab chr "\t"
 
-  or isspace equalspace
-  or isspace equalnewline
-  or isspace equaltab
+  or chrspace equalspace
+  or chrspace equalnewline
+  or chrspace equaltab
 end
 

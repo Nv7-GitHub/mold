@@ -8,19 +8,19 @@ proc next_instruction
   end
 
   # Get to next line if not at top
-  set char ""
+  set chr ""
 
   set atStart false
   eq atStart pos 0
   not atStart
   if atStart
-    call getchar
+    call getchr
     set cond false
-    eq cond char "\n"
+    eq cond chr "\n"
     not cond
 
     while cond
-      call getchar
+      call getchr
 
       add pos 1
       call checkbounds
@@ -28,48 +28,51 @@ proc next_instruction
         return
       end
 
-      call getchar
+      call getchr
       call checknewline
 
       # Check if is \n
-      call getchar
+      call getchr
       set cond false
-      eq cond char "\n"
+      eq cond chr "\n"
       not cond
     end
+  end
 
-    # Get to next char
+  # Get to next chr
+  call checknewline
+
+  call ischrspace
+  while chrspace
+    add pos 1
+    call checkbounds
+    if outofrange
+      return
+    end
+
+    call getchr
+    call ischrspace
     call checknewline
+  end
 
-    call ischarspace
-    while isspace
-      add pos 1
-      call checkbounds
-      if outofrange
-        return
-      end
-
-      call getchar
-      call ischarspace
-      call checknewline
+  # Get to end of instr
+  set next_instr ""
+  call getchr
+  call ischrspace
+  not chrspace
+  while chrspace
+    concat next_instr chr
+    add pos 1
+    call getchr
+    call checknewline
+    call checkbounds
+    if outofrange
+      set outofrange false
+      concat next_instr chr
+      return
     end
 
-    # Get to end of instr
-    set next_instr ""
-    call getchar
-    call ischarspace
-    not isspace
-    while isspace
-      concat next_instr char
-      add pos 1
-      call getchar
-      call checknewline
-      call checkbounds
-      if outofrange
-        set outofrange false
-        concat next_instr char
-        return
-      end
-    end
+    call ischrspace
+    not chrspace
   end
 end
