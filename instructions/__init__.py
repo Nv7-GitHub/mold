@@ -9,6 +9,7 @@ from instructions.bools import *
 from instructions.blocks import *
 from instructions.include import *
 from instructions.switch import *
+from instructions.stack import *
 from tokens import *
 
 def comment_instruction():

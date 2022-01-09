@@ -1,0 +1,14 @@
+set stack ()
+push stack "a"
+
+set v ""
+top v stack
+print v
+
+push stack "b"
+top v stack
+print v
+
+pop stack
+top v stack
+print v

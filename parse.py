@@ -48,6 +48,9 @@ instructions = {
   "case": case_instruction,
   "default": default_instruction,
   "break": break_instruction,
+  "push": push_instruction,
+  "pop": pop_instruction,
+  "top": top_instruction,
 }
 
 def parse():

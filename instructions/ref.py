@@ -13,6 +13,12 @@ def ref(ref):
     ctyp = "struct hash_entry*"
     code = "NULL"
     return
+
+  if ref == "()":
+    typ = "stack"
+    ctyp = "mold_stack*"
+    code = "mold_stack_new()"
+    return
   
   if ref == "true":
     typ = "bool"
