@@ -6,6 +6,7 @@
 #include <gc.h>
 #include "uthash.h"
 
+// Strings
 typedef struct string {
   char* val;
   int len;
@@ -52,6 +53,23 @@ void mold_strcat(string* dst, string* src) {
   dst->len += src->len;
 }
 
+string* mold_strind(string* str, float index) {
+  int ind = (int)index;
+  if (ind < 0 || ind >= str->len) {
+    printf("runtime error: string index out of range: %d\n", ind);
+    exit(1);
+  }
+  char* out = GC_MALLOC(2);
+  memcpy(out, str->val + ind, 1);
+
+  string* s = GC_MALLOC(sizeof(string));
+  s->val = out;
+  s->len = 1;
+  s->capacity = 2;
+  return s;
+}
+
+// Dictionaries
 struct hash_entry {
   char* key;
   char* val;
@@ -84,6 +102,7 @@ string* mold_hash_get(struct hash_entry** table, string* key) {
   return mold_newstring(v->val);
 }
 
+// Number 2 string
 string* mold_ftoa(float val) {
   int len = snprintf(NULL, 0, "%f", val);
   char* str = GC_MALLOC(len + 1);
@@ -98,6 +117,7 @@ string* mold_itoa(float val) {
   return mold_newstring(str);
 }
 
+// Command line args
 int argcnt = 0;
 char** argval = NULL;
 
@@ -110,22 +130,7 @@ string* mold_arg(float index) {
   return mold_newstring(argval[ind]);
 }
 
-string* mold_strind(string* str, float index) {
-  int ind = (int)index;
-  if (ind < 0 || ind >= str->len) {
-    printf("runtime error: string index out of range: %d\n", ind);
-    exit(1);
-  }
-  char* out = GC_MALLOC(2);
-  memcpy(out, str->val + ind, 1);
-
-  string* s = GC_MALLOC(sizeof(string));
-  s->val = out;
-  s->len = 1;
-  s->capacity = 2;
-  return s;
-}
-
+// Rand
 float mold_rand(float low, float high) {
   float random = ((float) rand()) / (float) RAND_MAX;
   return (random*(high-low)) + low;
@@ -137,3 +142,62 @@ float mold_irand(float l, float h) {
   return (float)((rand() % (high - low + 1)) + low);
 }
 
+// OS Interaction
+string* mold_read(string* file) {
+  FILE* f = fopen(mold_cstring(file), "r");
+  if (f == NULL) {
+    printf("runtime error: file not found: \"%s\"\n", mold_cstring(file));
+    exit(1);
+  }
+
+  // Get len
+  fseek(f, 0, SEEK_END);
+  int len = ftell(f);
+  rewind(f);
+
+  // Read
+  char* str = GC_MALLOC(len + 1);
+  fread(str, 1, len, f);
+
+  // Close
+  fclose(f);
+
+  return mold_newstring(str);
+}
+
+void mold_write(string* file, string* data) {
+  FILE* f = fopen(mold_cstring(file), "w+");
+  if (f == NULL) {
+    printf("runtime error: file not found: \"%s\"\n", mold_cstring(file));
+    exit(1);
+  }
+
+  fwrite(mold_cstring(data), 1, data->len, f);
+  fclose(f);
+}
+
+void mold_remove(string* file) {
+  remove(mold_cstring(file));
+}
+
+string* mold_system(string* cmd) {
+  FILE* f = popen(mold_cstring(cmd), "r");
+  if (f == NULL) {
+    printf("runtime error: system command failed: \"%s\"\n", mold_cstring(cmd));
+    exit(1);
+  }
+
+  // Get len
+  fseek(f, 0, SEEK_END);
+  int len = ftell(f);
+  rewind(f);
+
+  // Read
+  char* str = GC_MALLOC(len + 1);
+  fread(str, 1, len, f);
+
+  // Close
+  pclose(f);
+
+  return mold_newstring(str);
+}

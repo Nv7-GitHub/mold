@@ -1,0 +1,12 @@
+write a.txt "Hi"
+
+set txt ""
+read txt a.txt
+print txt
+
+write a.txt "Hello"
+set txt ""
+cmd txt "cat a.txt"
+print txt
+
+rm a.txt
