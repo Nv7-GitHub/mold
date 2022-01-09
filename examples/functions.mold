@@ -14,3 +14,12 @@ set add_a 1
 set add_b 2
 call add
 print add_ret
+
+# Return to stop execution
+proc demo
+  print "A"
+  return
+  print "B" # This will not run
+end
+
+call demo

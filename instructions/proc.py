@@ -16,6 +16,12 @@ def proc_instruction():
   fns[fn_name] = ""
   data.scopetype = "proc"
 
+def return_instruction():
+  if data.scopetype != "proc":
+    data.error = "cannot return outside of procedure!"
+    return
+  addCode("return;\n")
+
 def call_instruction():
   fn_name = get_next_param()
   if fn_name not in fns:

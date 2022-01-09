@@ -42,6 +42,7 @@ instructions = {
   "rand": lambda: rand_instruction(False),
   "irand": lambda: rand_instruction(True),
   "include": include_instruction,
+  "return": return_instruction,
 }
 
 def parse():
