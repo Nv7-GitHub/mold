@@ -7,6 +7,10 @@ import out
 
 done_else = False
 def if_instruction():
+  if data.scopetype != "":
+    data.error = "cannot use nested scopes"
+    return
+
   global done_else
 
   cond = get_next_param()
@@ -34,6 +38,10 @@ def else_instruction():
   out.indent += 1
 
 def while_instruction():
+  if data.scopetype != "":
+    data.error = "cannot use nested scopes"
+    return
+
   cond = get_next_param()
   ref.ref(cond)
   if ref.typ != "bool":

@@ -1,0 +1,34 @@
+# Handlers
+proc when_foo
+  print "It was foo!"
+end
+
+proc when_bar
+  print "It was bar!"
+end
+
+proc _default
+  print "Default"
+end
+
+# Switch
+set val "foo"
+switch val
+  case "foo" when_foo
+  case "bar" when_bar
+  default _default
+end
+
+set val "bar"
+switch val
+  case "foo" when_foo
+  case "bar" when_bar
+  default _default
+end
+
+set val "abc"
+switch val
+  case "foo" when_foo
+  case "bar" when_bar
+  default _default
+end

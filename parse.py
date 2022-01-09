@@ -47,6 +47,9 @@ instructions = {
   "write": write_instruction,
   "cmd": cmd_instruction,
   "rm": rm_instruction,
+  "switch": switch_instruction,
+  "case": case_instruction,
+  "default": default_instruction,
 }
 
 def parse():

@@ -201,3 +201,37 @@ string* mold_system(string* cmd) {
 
   return mold_newstring(str);
 }
+
+// Switch-case
+typedef void (*mold_switchFn)();
+typedef struct mold_switch {
+  char* key;
+  mold_switchFn val;
+  UT_hash_handle hh;
+} mold_switch;
+
+void mold_switch_add(string* key, mold_switchFn val, mold_switch** table) {
+  mold_switch* s = (mold_switch*)malloc(sizeof(mold_switch));
+  s->key = mold_cstring(key);
+  s->val = val;
+  HASH_ADD_KEYPTR(hh, *table, s->key, strlen(s->key), s);
+}
+
+void mold_switch_run(string* val, mold_switch** table, mold_switchFn _default) {
+  mold_switch* s;
+  HASH_FIND_STR(*table, mold_cstring(val), s);
+  if (s != NULL) {
+    s->val();
+  } else if (_default != NULL) {
+    _default();
+  }
+}
+
+void mold_switch_free(mold_switch** table) {
+  mold_switch* s, *tmp;
+  HASH_ITER(hh, *table, s, tmp) {
+    HASH_DEL(*table, s);
+    free(s);
+  }
+}
+
