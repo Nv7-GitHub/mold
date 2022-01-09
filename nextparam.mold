@@ -14,8 +14,6 @@ proc get_next_param
   set running true
   set next_param ""
   while running
-    # TODO: Escape characters
-
     # at end of param?
     call is_paramend
     if paramend_ret
@@ -27,23 +25,33 @@ proc get_next_param
       call getchr
       set canadd true
 
-      set isquote false
-      eq isquote chr "\"" #"
-      if isquote
-        not open_quote
-        set canadd false
-      end
-
-      # Check if at end
-      call ischrspace
-      if chrspace
-        set running false
-        set canadd false
-        call checknewline
-      end
-
-      if canadd
+      set isescape false
+      eq isescape chr "\\"
+      if isescape
         concat next_param chr
+        add pos 1
+        call getchr
+        concat next_param chr
+      else
+        # Not escape
+        set isquote false
+        eq isquote chr "\"" #"
+        if isquote
+          not open_quote
+          set canadd false
+        end
+
+        # Check if at end
+        call ischrspace
+        if chrspace
+          set running false
+          set canadd false
+          call checknewline
+        end
+
+        if canadd
+          concat next_param chr
+        end
       end
     end
 
