@@ -1,0 +1,118 @@
+set code ""
+set file ""
+set pos 0
+set line 0
+
+set outofrange false
+proc checkbounds
+  set len 0
+  length len code
+  sub len 2
+  set outofrange false
+  greater outofrange pos len
+end
+
+proc checknewline
+  set cond false
+  eq cond char "\n"
+  if cond
+    add line 1
+  end
+end
+
+proc getchar
+  ind char code pos
+end
+
+set isspace false
+proc ischarspace
+  set equalspace false
+  set equalnewline false
+  set equaltab false
+
+  set isspace false
+
+  eq equalspace char " "
+  eq equalnewline char "\n"
+  eq equaltab char "\t"
+
+  or isspace equalspace
+  or isspace equalnewline
+  or isspace equaltab
+end
+
+set next_instr ""
+proc next_instruction
+  set outofrange false
+
+  call checkbounds
+  if outofrange
+    return
+  end
+
+  # Get to next line if not at top
+  set char ""
+
+  set atStart false
+  eq atStart pos 0
+  not atStart
+  if atStart
+    call getchar
+    set cond false
+    eq cond char "\n"
+    not cond
+
+    while cond
+      call getchar
+
+      add pos 1
+      call checkbounds
+      if outofrange
+        return
+      end
+
+      call getchar
+      call checknewline
+
+      # Check if is \n
+      call getchar
+      set cond false
+      eq cond char "\n"
+      not cond
+    end
+
+    # Get to next char
+    call checknewline
+
+    call ischarspace
+    while isspace
+      add pos 1
+      call checkbounds
+      if outofrange
+        return
+      end
+
+      call getchar
+      call ischarspace
+      call checknewline
+    end
+
+    # Get to end of instr
+    set next_instr ""
+    call getchar
+    call ischarspace
+    not isspace
+    while isspace
+      concat next_instr char
+      add pos 1
+      call getchar
+      call checknewline
+      call checkbounds
+      if outofrange
+        set outofrange false
+        concat next_instr char
+        return
+      end
+    end
+  end
+end
