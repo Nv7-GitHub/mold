@@ -235,3 +235,28 @@ void mold_switch_free(mold_switch** table) {
   }
 }
 
+// Stacks
+typedef struct mold_stack {
+  string* val;
+  string* next;
+} mold_stack;
+
+string* mold_stack_top(mold_stack** stack) {
+  return (*stack)->val;
+}
+
+void mold_stack_push(mold_stack** stack, string* val) {
+  if (*stack->val == NULL) {
+    (*stack)->val = val;
+    return;
+  }
+  mold_stack* s = (mold_stack*)GC_MALLOC(sizeof(mold_stack));
+  s->val = val;
+  s->next = *stack;
+  *stack = s;
+}
+
+void mold_stack_pop(mold_stack** stack) {
+  mold_stack* s = *stack;
+  *stack = s->next;
+}

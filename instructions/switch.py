@@ -9,10 +9,6 @@ switch_val_code = ""
 default = "NULL"
 def switch_instruction():
   global switch_count, switch_val_code
-
-  if data.scopetype != "":
-    data.error = "cannot use nested scopes"
-    return
   
   v = get_next_param()
   ref.ref(v)
@@ -21,11 +17,11 @@ def switch_instruction():
     return
   addCode("mold_switch* mold_switchval_" + str(switch_count) + " = NULL;\n")
   switch_count += 1
-  data.scopetype = "switch"
+  data.push_scope("switch")
   switch_val_code = ref.code
 
 def case_instruction():
-  if data.scopetype != "switch":
+  if data.get_scope() != "switch":
     data.error = "cannot use case outside of switch"
     return
 
@@ -44,7 +40,7 @@ def case_instruction():
   addCode("mold_switch_add(" + ref.code + ", " + fn + ", &mold_switchval_" + str(switch_count - 1) + ");\n")
 
 def default_instruction():
-  if data.scopetype != "switch":
+  if data.get_scope() != "switch":
     data.error = "cannot use default outside of switch"
     return
 

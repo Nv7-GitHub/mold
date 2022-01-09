@@ -47,6 +47,7 @@ instructions = {
   "switch": switch_instruction,
   "case": case_instruction,
   "default": default_instruction,
+  "break": break_instruction,
 }
 
 def parse():
