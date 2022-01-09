@@ -1,5 +1,6 @@
 include data.mold
 include tokens.mold
+include nextinstr.mold
 
 arg file 1
 read code file
