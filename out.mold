@@ -1,0 +1,47 @@
+set out_top ""
+read out_top top.c
+set out_code ""
+
+set out_fn "\tGC_INIT();\n\targcnt = argc;\n\targval = argv;\n\tsrand(time(0));\n\n"
+set out_currFn "main"
+set out_currRetType "int"
+
+set out_variables ""
+set out_indent 1
+
+# This stuff is for when inside a different proc to save main fn stuff
+set out_mainFn ""
+set out_mainFnIndent 1
+
+# AddVar
+set addVar_code ""
+proc addVar
+    concat out_variables addVar_code
+end
+
+# AddFn (saves fn to code)
+proc addFn
+    # Get argc if in main function
+    set addFn_args ""
+    set addFn_isMain false
+    eq out_currFn "main"
+    if addFn_isMain
+        set addFn_args "int argc, char **argv"
+    end
+
+    # Save code
+    concat code out_currRetType
+    concat code " "
+    concat code out_currFn
+    concat code "("
+    concat code args
+    concat code ") {\n"
+    concat code out_fn
+    concat code "}\n\n"
+
+    # Go back to main
+    set out_currFn "main"
+    set out_currRetType "int"
+    set out_fn out_mainFn
+    set out_indent out_mainFnIndent
+end

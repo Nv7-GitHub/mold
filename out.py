@@ -5,18 +5,18 @@ import os
 top = read("top.c").replace("uthash.h", os.getcwd() + "/uthash.h")
 code = ""
 
-fn = "\targcnt = argc;\n\targval = argv;\n\tsrand(time(0));\n\n"
+fn = "\tGC_INIT();\n\targcnt = argc;\n\targval = argv;\n\tsrand(time(0));\n\n"
 currFn = "main"
 currFnRetType = "int"
 variables = ""
 indent = 1
 
-mainFn = "\tGC_INIT();\n"
+mainFn = ""
 mainIndent = 1
 
 def addVar(code):
   global variables
-  variables += "#line " + str(tokens.line+1) + " \"" + tokens.file + "\"\n"
+  #variables += "#line " + str(tokens.line+1) + " \"" + tokens.file + "\"\n"
   variables += code
 
 def addFn():
@@ -43,7 +43,7 @@ def newFn(name):
 
 def addCode(code):
   global fn
-  fn += ("\t" * indent) + "#line " + str(tokens.line+1) + " \"" + tokens.file + "\"\n"
+  #fn += ("\t" * indent) + "#line " + str(tokens.line+1) + " \"" + tokens.file + "\"\n"
   fn += ("\t" * indent) + code
 
 def build_code():
