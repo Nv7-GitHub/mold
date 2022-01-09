@@ -1,3 +1,3 @@
 error = ""
-progname = "out"
+progname = ""
 scopetype = ""

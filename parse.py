@@ -6,9 +6,6 @@ from instructions import *
 import data
 from build import *
 
-tokens.file = sys.argv[1]
-tokens.code = read(tokens.file)
-
 instructions = {
   "print": print_instruction,
   "set": set_instruction,

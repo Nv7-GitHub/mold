@@ -1,0 +1,4 @@
+include data.mold
+
+arg file 1
+read code file
