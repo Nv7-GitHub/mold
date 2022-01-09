@@ -1,0 +1,13 @@
+proc print_instruction
+    call get_next_param
+    set toRef next_param
+    call ref
+
+    switch ref_typ
+    case "float"
+        print "printing float"
+    
+    case "string"
+        print "printing string"
+    end
+end

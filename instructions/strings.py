@@ -130,3 +130,19 @@ def ind_instruction():
 
   addCode(var + " = mold_strind(" + valcode + ", " + ref.code + ");\n")
 
+# Numeric
+def numeric_instruction():
+  var = get_next_param()
+  if not var in vartyps:
+    data.error = "unknown variable: " + var
+    return
+  if vartyps[var] != "bool":
+    data.error = "wrong type for variable: " + var
+    return
+  str = get_next_param()
+  ref.ref(str)
+  if ref.typ != "string":
+    data.error = "wrong type for numeric: " + ref.typ
+    return
+  addCode(var + " = mold_isnumeric(" + ref.code + ");\n")
+

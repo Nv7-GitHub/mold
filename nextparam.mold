@@ -11,17 +11,17 @@ proc get_next_param
 
   # Get param
   set open_quote false
-  set running true
+  set nextparam_running true
   set next_param ""
-  while running
+  while nextparam_running
     # at end of param?
     call is_paramend
     if paramend_ret
-      set running false
+      set nextparam_running false
     end
 
     # if not at end of param
-    if running
+    if nextparam_running
       call getchr
       set canadd true
 
@@ -44,7 +44,7 @@ proc get_next_param
         # Check if at end
         call ischrspace
         if chrspace
-          set running false
+          set nextparam_running false
           set canadd false
           call checknewline
         end

@@ -1,0 +1,25 @@
+set toRef ""
+set ref_typ ""
+set ref_ctyp ""
+set ref_code ""
+
+proc ref
+    set ref_typ ""
+    set ref_ctyp ""
+    set ref_code ""
+
+    set ref_isnumeric false
+    numeric ref_isnumeric toRef
+    if ref_isnumeric
+        set ref_typ "float"
+        set ref_ctyp "float"
+        set ref_code toRef
+        return
+    end
+
+    set ref_typ "string"
+    set ref_ctyp "string*"
+    set ref_code "mold_newstring(\"" #"
+    concat ref_code toRef
+    concat ref_code "\")" #"
+end

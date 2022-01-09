@@ -51,6 +51,8 @@ instructions = {
   "push": push_instruction,
   "pop": pop_instruction,
   "top": top_instruction,
+  "numeric": numeric_instruction,
+  "exit": exit_instruction,
 }
 
 def parse():

@@ -50,6 +50,11 @@ proc is_paramend
   set paramend_outofrange false
   greater paramend_outofrange pos len
 
+  if paramend_outofrange
+    set paramend_ret true
+    return
+  end
+
   call getchr
   set paramend_endofline false
   eq paramend_endofline chr "\n"
@@ -58,7 +63,6 @@ proc is_paramend
   eq paramend_comment chr "#"
 
   set paramend_ret false
-  or paramend_ret paramend_outofrange
   or paramend_ret paramend_endofline
   or paramend_ret paramend_comment
 end

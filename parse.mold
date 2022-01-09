@@ -1,0 +1,23 @@
+proc parse
+    set parse_running true
+    while parse_running
+        call next_instruction
+        if outofrange
+            set parse_running false
+        end
+
+        if parse_running
+            switch next_instr
+            case "print"
+                call print_instruction
+
+            default
+                set error_msg "unknown instruction: \"" #"
+                concat error_msg next_instr
+                concat error_msg "\"" #"
+                print error_msg
+                exit 1
+            end
+        end
+    end
+end

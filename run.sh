@@ -1,1 +1,1 @@
-python3 main.py main.mold mold > out.c && ./mold examples/hello.mold
+python3 main.py main.mold mold > out.c && ./mold examples/simple.mold

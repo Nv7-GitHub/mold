@@ -74,3 +74,11 @@ def rm_instruction():
     return
 
   addCode("mold_remove(" + ref.code + ");\n")
+
+def exit_instruction():
+  code = get_next_param()
+  ref.ref(code)
+  if ref.typ != "float":
+    data.error = "exit: code must be a number"
+    return
+  addCode("exit((int)" + ref.code + ");\n")

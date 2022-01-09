@@ -117,6 +117,15 @@ string* mold_itoa(float val) {
   return mold_newstring(str);
 }
 
+bool mold_isnumeric(string* str) {
+  for (int i = 0; i < str->len; i++) {
+    if ((str->val[i] < '0' || str->val[i] > '9') && str->val[i] != '.') {
+      return false;
+    }
+  }
+  return true;
+}
+
 // Command line args
 int argcnt = 0;
 char** argval = NULL;
