@@ -202,37 +202,23 @@ string* mold_system(string* cmd) {
   return mold_newstring(str);
 }
 
-// Switch-case
-typedef void (*mold_switchFn)();
-typedef struct mold_switch {
-  char* key;
-  mold_switchFn val;
-  UT_hash_handle hh;
-} mold_switch;
+// Switch-case (adapted from https://github.com/haipome/fnv)
+#define FNV_32_PRIME 0x01000193
+#define FNV1_32_INIT 0x811c9dc5
 
-void mold_switch_add(string* key, mold_switchFn val, mold_switch** table) {
-  mold_switch* s = (mold_switch*)malloc(sizeof(mold_switch));
-  s->key = mold_cstring(key);
-  s->val = val;
-  HASH_ADD_KEYPTR(hh, *table, s->key, strlen(s->key), s);
-}
+u_int32_t mold_fnv_32a_str(char *str) {
+    u_int32_t hval = FNV1_32_INIT;
+    unsigned char *s = (unsigned char *)str;	/* unsigned string */
+    while (*s) {
+      /* xor the bottom with the current octet */
+      hval ^= (u_int32_t)*s++;
 
-void mold_switch_run(string* val, mold_switch** table, mold_switchFn _default) {
-  mold_switch* s;
-  HASH_FIND_STR(*table, mold_cstring(val), s);
-  if (s != NULL) {
-    s->val();
-  } else if (_default != NULL) {
-    _default();
-  }
-}
+      /* multiply by the 32 bit FNV magic prime mod 2^32 */
+      hval *= FNV_32_PRIME;
+    }
 
-void mold_switch_free(mold_switch** table) {
-  mold_switch* s, *tmp;
-  HASH_ITER(hh, *table, s, tmp) {
-    HASH_DEL(*table, s);
-    free(s);
-  }
+    /* return our new hash value */
+    return hval;
 }
 
 // Stacks

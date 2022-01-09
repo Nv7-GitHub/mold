@@ -14,21 +14,30 @@ end
 # Switch
 set val "foo"
 switch val
-  case "foo" when_foo
-  case "bar" when_bar
-  default _default
+  case "foo"
+    call when_foo
+  case "bar" 
+    call when_bar
+  default 
+    call _default
 end
 
 set val "bar"
 switch val
-  case "foo" when_foo
-  case "bar" when_bar
-  default _default
+  case "foo"
+    call when_foo
+  case "bar" 
+    call when_bar
+  default 
+    call _default
 end
 
 set val "abc"
 switch val
-  case "foo" when_foo
-  case "bar" when_bar
-  default _default
+  case "foo"
+    call when_foo
+  case "bar" 
+    call when_bar
+  default 
+    call _default
 end
