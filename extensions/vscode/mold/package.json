@@ -1,0 +1,30 @@
+{
+    "name": "mold",
+    "displayName": "Mold",
+    "description": "Mold language support in VSCode!",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.63.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "mold",
+            "aliases": ["Mold", "mold"],
+            "extensions": [".mold",".mld"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "mold",
+            "scopeName": "source.mold",
+            "path": "./syntaxes/mold.tmLanguage.json"
+        }]
+    },
+    "publisher": "Nv7",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Nv7-Github/mold.git"
+    }
+}

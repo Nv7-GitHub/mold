@@ -1,0 +1,35 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Mold",
+	"patterns": [
+		{
+			"name": "comment.mold",
+			"begin": "#",
+			"end": "\n"
+		},
+		{
+			"name": "string.quoted.mold",
+			"begin": "\"",
+			"end": "\""
+		},
+		{
+			"begin": "(\\d+)",
+			"beginCaptures": {
+				"1": {
+					"name": "constant.numeric.mold"
+				}
+			},
+			"end": "( |\\n)"
+		},
+		{
+			"begin": "^(?:(?:\\t| )?)+([a-zA-Z]+)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.mold"
+				}
+			},
+			"end": "( |\\n)"
+		}
+	],
+	"scopeName": "source.mold"
+}
