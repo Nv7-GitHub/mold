@@ -41,21 +41,20 @@ instructions = {
   "ind": ind_instruction,
   "rand": lambda: rand_instruction(False),
   "irand": lambda: rand_instruction(True),
+  "include": include_instruction,
 }
 
-while pos < len(tokens.code):
-  ended = next_instruction()
-  if ended:
-    break
-
-  if tokens.next_instr in instructions:
-    data.error = ""
-    instructions[tokens.next_instr]()
-    if data.error != "":
-      print(tokens.file + ":" + str(tokens.line) + ": " + data.error, file=sys.stderr)
+def parse():
+  while True:
+    ended = next_instruction()
+    if ended:
+      break
+    if tokens.next_instr in instructions:
+      data.error = ""
+      instructions[tokens.next_instr]()
+      if data.error != "":
+        print(tokens.file + ":" + str(tokens.line) + ": " + data.error, file=sys.stderr)
+        exit(1)
+    else:
+      print(tokens.file + ":" + str(tokens.line) + ": " + "unknown instruction: " + tokens.next_instr, file=sys.stderr)
       exit(1)
-  else:
-    print(tokens.file + ":" + str(tokens.line) + ": " + "unknown instruction: " + tokens.next_instr, file=sys.stderr)
-    exit(1)
-
-build()

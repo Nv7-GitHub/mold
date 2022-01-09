@@ -1,0 +1,5 @@
+include "examples/include/data.mold"
+include "examples/include/logic.mold"
+
+call logic
+print text

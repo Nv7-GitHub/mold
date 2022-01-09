@@ -13,6 +13,15 @@ typedef struct string {
 } string;
 
 string* mold_newstring(char* val) {
+  if (strlen(val) == 0) {
+    string* s = GC_MALLOC(sizeof(string));
+    char* v = GC_MALLOC(1);
+    s->val = v;
+    s->len = 0;
+    s->capacity = 1;
+    return s;
+  }
+  
   string* s = GC_MALLOC(sizeof(string));
   char* v = GC_MALLOC(strlen(val)*2); // Alloc with 2x capacity
   memcpy(v, val, strlen(val));

@@ -24,7 +24,7 @@ def addFn():
   args = ""
   if currFn == "main":
     args = "int argc, char** argv"
-  code += currFnRetType + " " + currFn + "(" + args + ") {\n" + fn + "}\n"
+  code += currFnRetType + " " + currFn + "(" + args + ") {\n" + fn + "}\n\n"
   currFnRetType = "int"
 
   currFn = "main"

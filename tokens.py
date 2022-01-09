@@ -1,9 +1,37 @@
-import sys
-
 code = ""
 file = ""
 pos = 0
 line = 0
+
+oldLine = 0
+oldPos = 0
+oldCode = ""
+oldFile = ""
+
+def next_file(name, src):
+  global code, file, pos, line, oldLine, oldPos, oldCode, oldFile
+  if (oldFile != ""):
+    return "imports aren't allowed in imported files!"
+  oldCode = code
+  oldFile = file
+  oldLine = line
+  oldPos = pos
+  code = src
+  file = name
+  pos = 0
+  line = 0
+  return ""
+
+def prev_file():
+  global code, file, pos, line, oldLine, oldPos, oldCode, oldFile
+  code = oldCode
+  file = oldFile
+  pos = oldPos
+  line = oldLine
+  oldCode = ""
+  oldFile = ""
+  oldPos = 0
+  oldLine = 0
 
 next_instr = ""
 def next_instruction():

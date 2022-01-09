@@ -1,0 +1,4 @@
+proc logic
+  concat text "Hello, "
+  concat text "World!"
+end

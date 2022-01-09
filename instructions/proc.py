@@ -1,4 +1,5 @@
 import data
+import out
 from tokens import *
 from out import *
 
@@ -11,6 +12,7 @@ def proc_instruction():
   
   fn_name = get_next_param()
   newFn(fn_name)
+  out.indent = 1
   fns[fn_name] = ""
   data.scopetype = "proc"
 
