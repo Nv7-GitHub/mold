@@ -16,7 +16,7 @@ typedef struct string {
 string* mold_newstring(char* val) {
   if (strlen(val) == 0) {
     string* s = GC_MALLOC(sizeof(string));
-    char* v = GC_MALLOC(1);
+    char* v = malloc(1);
     s->val = v;
     s->len = 0;
     s->capacity = 1;
@@ -24,7 +24,7 @@ string* mold_newstring(char* val) {
   }
   
   string* s = GC_MALLOC(sizeof(string));
-  char* v = GC_MALLOC(strlen(val)*2); // Alloc with 2x capacity
+  char* v = malloc(strlen(val)*2); // Alloc with 2x capacity
   memcpy(v, val, strlen(val));
   s->val = v;
   s->len = strlen(val);
@@ -40,8 +40,9 @@ char* mold_cstring(string* str) {
 
 void mold_resize_string(string* s) {
   s->capacity *= 2;
-  char* newVal = GC_MALLOC(s->capacity);
+  char* newVal = malloc(s->capacity);
   memcpy(newVal, s->val, s->len);
+  free(s->val);
   s->val = newVal;
 }
 
