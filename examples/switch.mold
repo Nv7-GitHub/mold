@@ -12,32 +12,21 @@ proc _default
 end
 
 # Switch
+set val ""
+proc switch
+  switch val
+    case "foo"
+      call when_foo
+    case "bar" 
+      call when_bar
+    default 
+      call _default
+  end
+end
+
 set val "foo"
-switch val
-  case "foo"
-    call when_foo
-  case "bar" 
-    call when_bar
-  default 
-    call _default
-end
-
+call switch
 set val "bar"
-switch val
-  case "foo"
-    call when_foo
-  case "bar" 
-    call when_bar
-  default 
-    call _default
-end
-
+call switch
 set val "abc"
-switch val
-  case "foo"
-    call when_foo
-  case "bar" 
-    call when_bar
-  default 
-    call _default
-end
+call switch

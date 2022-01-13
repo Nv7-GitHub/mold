@@ -18,7 +18,7 @@ def concat_instruction():
     data.error = "wrong type for concat: " + ref.typ
     return
   
-  addCode("mold_strcat(" + var + ", " + ref.code + ");\n")
+  addCode(data.namespace + var + " += " + ref.code + ";\n")
 
 def length_instruction():
   var = get_next_param()
@@ -34,7 +34,7 @@ def length_instruction():
     data.error = "wrong type for length: " + ref.typ
     return
   
-  addCode(var + " = (float)(" + ref.code + "->len);\n")
+  addCode(data.namespace + var + " = (float)(" + ref.code + ".length());\n")
 
 # Float to string
 def ftoa_instruction():
@@ -48,10 +48,10 @@ def ftoa_instruction():
     data.error = "wrong type for variable: " + var
     return
   if ref.typ != "float":
-    data.error = "wrong type for itoa: " + ref.typ
+    data.error = "wrong type for ftoa: " + ref.typ
     return
   
-  addCode(var + " = mold_ftoa(" + ref.code + ");\n")
+  addCode(data.namespace + var + " = std::to_string(" + ref.code + ");\n")
 
 # Float to int to string
 def itoa_instruction():
@@ -68,7 +68,7 @@ def itoa_instruction():
     data.error = "wrong type for itoa: " + ref.typ
     return
   
-  addCode(var + " = mold_itoa(" + ref.code + ");\n")
+  addCode(data.namespace + var + " = std::to_string((int)(" + ref.code + "));\n")
 
 # String to float
 def atof_instruction():
@@ -82,10 +82,10 @@ def atof_instruction():
     data.error = "wrong type for variable: " + var
     return
   if ref.typ != "string":
-    data.error = "wrong type for itoa: " + ref.typ
+    data.error = "wrong type for atof: " + ref.typ
     return
   
-  addCode(var + " = (float)atof(mold_cstring(" + ref.code + "));\n")
+  addCode(data.namespace + var + " = std::stof(" + ref.code + ");\n")
 
 # Command line args
 def arg_instruction():
@@ -103,7 +103,7 @@ def arg_instruction():
     data.error = "wrong index type for arg: " + ref.typ
     return
 
-  addCode(var + " = mold_arg(" + ref.code + ");\n")
+  addCode(data.namespace + var + " = lib_mold_arg(" + ref.code + ");\n")
 
 # String index
 def ind_instruction():
@@ -128,7 +128,7 @@ def ind_instruction():
     data.error = "wrong index type for ind: " + ref.typ
     return
 
-  addCode(var + " = mold_strind(" + valcode + ", " + ref.code + ");\n")
+  addCode(data.namespace + var + " = " + valcode + "[(int)" + ref.code + "];\n")
 
 # Numeric
 def numeric_instruction():
@@ -144,5 +144,5 @@ def numeric_instruction():
   if ref.typ != "string":
     data.error = "wrong type for numeric: " + ref.typ
     return
-  addCode(var + " = mold_isnumeric(" + ref.code + ");\n")
+  addCode(data.namespace + var + " = lib_mold_numeric(" + ref.code + ");\n")
 

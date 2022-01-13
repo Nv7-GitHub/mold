@@ -1,5 +1,6 @@
 error = ""
 progname = ""
+namespace = "mold__"
 
 scope = []
 infunc = False

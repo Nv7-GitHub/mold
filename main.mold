@@ -13,9 +13,9 @@ read code file
 call parse
 call build
 
-write "out.c" out_top
+write "out.cpp" out_top
 set build_output ""
-set build_cmd "cc `pkg-config --cflags --libs --static bdw-gc` out.c -o "
+set build_cmd "cc `pkg-config --cflags --libs --static bdw-gc` out.cpp -o "
 set build_exec ""
 arg build_exec 2
 concat build_cmd build_exec

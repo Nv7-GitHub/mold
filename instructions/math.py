@@ -17,7 +17,7 @@ def math_instruction(op):
   if ref.typ != "float":
     data.error = "wrong type for math: " + ref.typ
     return
-  addCode(var + " " + op + "= " + ref.code + ";\n")
+  addCode(data.namespace + var + " " + op + "= " + ref.code + ";\n")
 
 def rand_instruction(is_int):
   var = get_next_param()
@@ -42,9 +42,9 @@ def rand_instruction(is_int):
     return
   highcode = ref.code
   
-  fn = "mold_rand"
+  fn = "lib_mold_random"
   if is_int:
-    fn = "mold_irand"
-  addCode(var + " = " + fn + "(" + lowcode + ", " + highcode + ");\n")
+    fn = "lib_mold_randint"
+  addCode(data.namespace + var + " = " + fn + "(" + lowcode + ", " + highcode + ");\n")
   
   

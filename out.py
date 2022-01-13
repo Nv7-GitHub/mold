@@ -1,11 +1,11 @@
 from lib import *
 import tokens
-import os
+import data
 
-top = read("top.c").replace("uthash.h", os.getcwd() + "/uthash.h")
+top = read("lib.cpp")
 code = ""
 
-fn = "\tGC_INIT();\n\targcnt = argc;\n\targval = argv;\n\tsrand(time(0));\n\n"
+fn = "\targcnt = argc;\n\targval = argv;\n\n"
 currFn = "main"
 currFnRetType = "int"
 variables = ""
@@ -22,9 +22,13 @@ def addVar(code):
 def addFn():
   global code, currFn, currFnRetType, mainFn, fn, indent, mainIndent
   args = ""
+  fnName = ""
   if currFn == "main":
     args = "int argc, char** argv"
-  code += currFnRetType + " " + currFn + "(" + args + ") {\n" + fn + "}\n\n"
+    fnName = "main"
+  else:
+    fnName = data.namespace + currFn
+  code += currFnRetType + " " + fnName + "(" + args + ") {\n" + fn + "}\n\n"
   currFnRetType = "int"
 
   currFn = "main"

@@ -18,7 +18,7 @@ def push_instruction():
   if ref.typ != "string":
     data.error = "wrong type for setkey: " + ref.typ
   
-  addCode("mold_stack_push(&" + var + ", " + ref.code + ");\n")
+  addCode(data.namespace + var + ".push(" + ref.code + ");\n")
 
 def pop_instruction():
   var = get_next_param()
@@ -29,7 +29,7 @@ def pop_instruction():
     data.error = "wrong type for variable: " + var
     return
 
-  addCode("mold_stack_pop(&" + var + ");\n")
+  addCode(data.namespace + var + ".pop();\n")
 
 def top_instruction():
   var = get_next_param()
@@ -46,4 +46,4 @@ def top_instruction():
     data.error = "wrong type for top: " + ref.typ
     return
 
-  addCode(var + " = mold_stack_top(&" + ref.code + ");\n")
+  addCode(data.namespace + var + " = " + ref.code + ".top();\n")

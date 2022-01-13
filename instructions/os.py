@@ -7,12 +7,10 @@ from instructions.variables import vartyps
 def print_instruction():
   par = get_next_param()
   ref.ref(par)
-  if ref.typ == "float":
-    addCode("printf(\"%f\\n\", " + ref.code + ");\n")
-  if ref.typ == "string":
-    addCode("printf(\"%s\\n\", mold_cstring(" + ref.code + "));\n")
-  if ref.typ == "bool":
-    addCode("puts(" + ref.code + " ? \"true\" : \"false\");\n")
+  if ref.typ == "float" or ref.typ == "bool" or ref.typ == "string":
+    addCode("std::cout << " + ref.code + " << std::endl;\n")
+  else:
+    data.error = "print: cannot print composite value"
 
 def read_instruction():
   var = get_next_param()
@@ -30,7 +28,7 @@ def read_instruction():
     data.error = "read: filename must be a string"
     return
 
-  addCode(var + " = mold_read(" + ref.code + ");\n")
+  addCode(data.namespace + var + " = lib_mold_read(" + ref.code + ");\n")
 
 def write_instruction():
   file = get_next_param()
@@ -47,7 +45,7 @@ def write_instruction():
     return
   value = ref.code
 
-  addCode("mold_write(" + filename + ", " + value + ");\n")
+  addCode("lib_mold_write(" + filename + ", " + value + ");\n")
 
 def cmd_instruction():
   var = get_next_param()
@@ -64,7 +62,7 @@ def cmd_instruction():
     data.error = "cmd: command must be a string"
     return
 
-  addCode(var + " = mold_system(" + ref.code + ");\n")
+  addCode(data.namespace + var + " = lib_mold_system(" + ref.code + ");\n")
 
 def rm_instruction():
   file = get_next_param()
@@ -73,7 +71,7 @@ def rm_instruction():
     data.error = "rm: file must be a string"
     return
 
-  addCode("mold_remove(" + ref.code + ");\n")
+  addCode("lib_mold_remove(" + ref.code + ");\n")
 
 def exit_instruction():
   code = get_next_param()

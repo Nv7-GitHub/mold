@@ -1,6 +1,7 @@
 from tokens import *
 from out import *
 from instructions import ref
+import data
 
 vartyps = {}
 varctyps = {}
@@ -12,6 +13,7 @@ def set_instruction():
   if not name in vartyps:
     vartyps[name] = ref.typ
     varctyps[name] = ref.ctyp
-    addVar(ref.ctyp + " " + name + ";\n")
-  addCode(name + " = " + ref.code + ";\n")
+    addVar(ref.ctyp + " " + data.namespace + name + ";\n")
+  if ref.code != "":
+    addCode(data.namespace + name + " = " + ref.code + ";\n")
   

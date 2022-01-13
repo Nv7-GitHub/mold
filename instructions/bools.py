@@ -28,9 +28,9 @@ def comp_instruction(op):
     return
 
   if typ1 == "float" or typ1 == "bool":
-    addCode(var + " = " + code1 + " " + op + " " + code2 + ";\n")
+    addCode(data.namespace + var + " = " + code1 + " " + op + " " + code2 + ";\n")
   if typ1 == "string":
-    addCode(var + " = strcmp(mold_cstring(" + code1 + "), mold_cstring(" + code2 + ")) " + op + " 0;\n")
+    addCode(data.namespace + var + " = " + code1 + op + code2 + ";\n")
   if typ1 == "dict":
     data.error = "cannot compare dictionaries"
 
@@ -43,7 +43,7 @@ def not_instruction():
     data.error = "wrong type for variable: " + var
     return
 
-  addCode(var + " = !(" + var + ");\n")
+  addCode(data.namespace + var + " = !(" + data.namespace + var + ");\n")
 
 def logical_instruction(op):
   var = get_next_param()
@@ -60,5 +60,5 @@ def logical_instruction(op):
     data.error = "value must be of type bool"
     return
 
-  addCode(var + " = " + var + " " + op + " (" + ref.code + ");\n")
+  addCode(data.namespace + var + " = " + data.namespace + var + " " + op + " (" + ref.code + ");\n")
 

@@ -25,7 +25,7 @@ def setkey_instruction():
     data.error = "wrong type for setkey: " + ref.typ
   valuecode = ref.code
 
-  addCode("mold_hash_set(&" + var + ", " + keycode + ", " + valuecode + ");\n")
+  addCode(data.namespace + var + "[" + keycode + "] = " + valuecode + ";\n")
 
 def getkey_instruction():
   var = get_next_param()
@@ -49,4 +49,4 @@ def getkey_instruction():
   if ref.typ != "string":
     data.error = "wrong type for getkey: " + ref.typ
   
-  addCode(var + " = mold_hash_get(&" + table + ", " + ref.code + ");\n")
+  addCode(data.namespace + var + " = " + data.namespace + table + "[" + ref.code + "];\n")

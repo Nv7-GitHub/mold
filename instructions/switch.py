@@ -2,19 +2,7 @@ from out import *
 import data
 from tokens import *
 from instructions import ref
-from instructions.proc import fns
 import out
-
-FNV_32_PRIME = 16777619
-FNV1_32_INIT = -2128831035
-
-def fnv_32a(val):
-  hval = FNV1_32_INIT
-  for char in val:
-    hval ^= ord(char)
-    hval *= FNV_32_PRIME
-    hval %= 2**32 # Done in C by hitting maximum cap of int32
-  return hval
 
 need_break = False
 def switch_instruction():
@@ -25,7 +13,7 @@ def switch_instruction():
   if ref.typ != "string":
     data.error = "cannot switch on non-string"
     return
-  addCode("switch (mold_fnv_32a_str(mold_cstring(" + ref.code + "))) {\n")
+  addCode("switch (lib_mold_fnv_32a(" + ref.code + ")) {\n")
   out.indent += 1
   data.push_scope("switch")
   need_break = False
@@ -41,8 +29,7 @@ def case_instruction():
     addCode("break;\n")
 
   out.indent -= 1
-  hashed = str(fnv_32a(val))
-  addCode("case " + hashed + ":\n")
+  addCode("case lib_mold_fnv_32a_const(\"" + val + "\"):\n")
   out.indent += 1
   need_break = True
 

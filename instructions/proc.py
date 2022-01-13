@@ -28,4 +28,4 @@ def call_instruction():
   if fn_name not in fns:
     data.error = "unknown procedure: " + fn_name
     return
-  addCode(fn_name + "();\n")
+  addCode(data.namespace + fn_name + "();\n")

@@ -1,5 +1,5 @@
 set out_top ""
-read out_top top.c
+read out_top lib.cpp
 set out_code ""
 
 set out_fn "\tGC_INIT();\n\targcnt = argc;\n\targval = argv;\n\tsrand(time(0));\n\n"

@@ -1,4 +1,5 @@
 from instructions import variables as vars
+import data
 
 typ = ""
 code = ""
@@ -10,14 +11,14 @@ def ref(ref):
   global typ, ctyp, code
   if ref == "{}":
     typ = "dict"
-    ctyp = "struct hash_entry*"
-    code = "NULL"
+    ctyp = "std::unordered_map<std::string, std::string>"
+    code = ""
     return
 
   if ref == "()":
     typ = "stack"
-    ctyp = "mold_stack*"
-    code = "mold_stack_new()"
+    ctyp = "std::stack<std::string>"
+    code = ""
     return
   
   if ref == "true":
@@ -41,9 +42,9 @@ def ref(ref):
   if ref in vars.vartyps:
     typ = vars.vartyps[ref]
     ctyp = vars.varctyps[ref]
-    code = ref
+    code = data.namespace + ref
     return
 
   typ = "string"
-  ctyp = "string*"
-  code = "mold_newstring(\"" + ref + "\")"
+  ctyp = "std::string"
+  code = "\"" + ref + "\""
