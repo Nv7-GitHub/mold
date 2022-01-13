@@ -1,2 +1,2 @@
 # mold
-The Mold programming language!
+Mold is a programming language designed with the goal of compiling itself. It has an extremely easy-to-parse syntax and language features built for parsing and compiling languages. See the `examples` directory for an examples on most of the language.
