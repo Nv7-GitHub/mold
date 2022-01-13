@@ -1,0 +1,38 @@
+proc set_instruction
+  call get_next_param
+  set name next_param
+
+  call get_next_param
+  set toRef next_param
+  call ref
+
+  set set_nokey false
+  haskey set_nokey vartyps name
+  not set_nokey
+  if set_nokey
+    setkey vartyps name ref_typ
+    setkey varctyps name ref_ctyp
+
+    set addVar_code ""
+    concat addVar_code ref_ctyp
+    concat addVar_code " "
+    concat addVar_code namespace
+    concat addVar_code name
+    concat addVar_code ";\n"
+    call addVar
+  end
+
+  # Initial value?
+  set set_initialval false
+  eq set_initialval ref_code ""
+  not set_initialval
+  if set_initialval
+    set addCode_code ""
+    concat addCode_code namespace
+    concat addCode_code name
+    concat addCode_code " = "
+    concat addCode_code ref_code
+    concat addCode_code ";\n"
+    call addCode
+  end
+end

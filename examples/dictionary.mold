@@ -9,4 +9,8 @@ setkey a "Hi" "Cool!"
 getkey val a "Hi"
 print val
 
+set contains false
+haskey contains a "Hi"
+print contains # Should print true
+
 getkey val a "Unknown"

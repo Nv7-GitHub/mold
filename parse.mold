@@ -1,3 +1,20 @@
+proc do_next_instr
+    switch next_instr
+    case "print"
+        call print_instruction
+
+    case "set"
+        call set_instruction
+
+    default
+        set error_msg "unknown instruction: \"" #"
+        concat error_msg next_instr
+        concat error_msg "\"" #"
+        print error_msg
+        exit 1
+    end
+end
+
 proc parse
     set parse_running true
     while parse_running
@@ -8,17 +25,7 @@ proc parse
 
         if parse_running
             set error ""
-            switch next_instr
-            case "print"
-                call print_instruction
-
-            default
-                set error_msg "unknown instruction: \"" #"
-                concat error_msg next_instr
-                concat error_msg "\"" #"
-                print error_msg
-                exit 1
-            end
+            call do_next_instr
 
             set parse_haserror false
             eq parse_haserror error ""

@@ -1,1 +1,4 @@
-print "Hello, World!"
+set a 1
+set b 2
+print a
+print b

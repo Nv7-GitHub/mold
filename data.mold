@@ -6,3 +6,11 @@ set ref_true "tru"
 concat ref_true "e"
 set ref_false "fals"
 concat ref_false "e"
+set ref_dict "{"
+concat ref_dict "}"
+set ref_stack "("
+concat ref_stack ")"
+
+# Vartypes
+set vartyps {}
+set varctyps {}

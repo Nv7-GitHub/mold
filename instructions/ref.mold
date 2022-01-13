@@ -8,6 +8,26 @@ proc ref
     set ref_ctyp ""
     set ref_code ""
 
+    # Dictionary check
+    set ref_isDictionary false
+    eq ref_isDictionary toRef ref_dict
+    if ref_isDictionary
+        set ref_typ "dict"
+        set ref_ctyp "std::unordered_map<std::string, std::string>"
+        set ref_code ""
+        return
+    end
+
+    # Stack check
+    set ref_isStack false
+    eq ref_isStack toRef ref_stack
+    if ref_isStack
+        set ref_typ "stack"
+        set ref_ctyp "std::stack<std::string>"
+        set ref_code ""
+        return
+    end
+
     # Bool Check
     set ref_isBool false
     set ref_isBoolFalse false
@@ -23,6 +43,7 @@ proc ref
         return
     end
 
+    # Number Check
     set ref_isnumeric false
     numeric ref_isnumeric toRef
     if ref_isnumeric
@@ -32,6 +53,19 @@ proc ref
         return
     end
 
+    # Variable Check
+    set ref_isVariable false
+    haskey ref_isVariable vartyps toRef
+    if ref_isVariable
+        getkey ref_typ vartyps toRef
+        getkey ref_ctyp varctyps toRef
+        set ref_code ""
+        concat ref_code namespace
+        concat ref_code toRef
+        return
+    end
+
+    # String
     set ref_typ "string"
     set ref_ctyp "std::string"
     set ref_code "\"" #"

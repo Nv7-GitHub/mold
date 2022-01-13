@@ -53,6 +53,7 @@ instructions = {
   "top": top_instruction,
   "numeric": numeric_instruction,
   "exit": exit_instruction,
+  "haskey": haskey_instruction,
 }
 
 def parse():
