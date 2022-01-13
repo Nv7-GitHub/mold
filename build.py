@@ -9,7 +9,7 @@ def build():
     f.write(code)
     f.close()
 
-    os.system("g++ -std=c++14 -lboost_system -lboost_filesystem " + f.name + " -o " + data.progname)
+    os.system("g++ -std=c++17 " + f.name + " -o " + data.progname)
 
     os.remove(f.name)
   print(code)

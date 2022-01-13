@@ -3,8 +3,8 @@
 #include <string>
 #include <random>
 #include <fstream>
-#include <boost/filesystem.hpp>
 #include <stack>
+#include <filesystem>
 
 void lib_mold_error(std::string e) {
   std::cerr << e << std::endl;
@@ -59,9 +59,21 @@ void lib_mold_write(std::string path, std::string data) {
   stream.close();
 }
 
-// https://stackoverflow.com/a/20617844/11388343 (modified to use boost::filesystem and lib_mold_read_file)
+// https://stackoverflow.com/a/12468109/11388343
+std::string lib_mold_internal_random_string( size_t length ) {
+  auto randchar = []() -> char {
+    const char charset[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    const size_t max_index = (sizeof(charset) - 1);
+    return charset[ rand() % max_index ];
+  };
+  std::string str(length,0);
+  std::generate_n(str.begin(), length, randchar);
+  return str;
+}
+
+// https://stackoverflow.com/a/20617844/11388343 (modified to use my own unique file generator and lib_mold_read_file)
 std::string lib_mold_system(std::string command) {
-  std::string temp = boost::filesystem::unique_path().native();
+  std::string temp = std::filesystem::temp_directory_path().native() + lib_mold_internal_random_string(6);
   std::string cmd = command + " >> " + temp;
   std::system(cmd.c_str());
 

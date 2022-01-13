@@ -16,7 +16,7 @@ call build
 
 write "out.cpp" out_top
 set build_output ""
-set build_cmd "g++ -std=c++14 -lboost_system -lboost_filesystem out.cpp -o "
+set build_cmd "g++ -std=c++17 out.cpp -o "
 set build_exec ""
 arg build_exec 2
 concat build_cmd build_exec
