@@ -7,8 +7,10 @@ from instructions.variables import vartyps
 def print_instruction():
   par = get_next_param()
   ref.ref(par)
-  if ref.typ == "float" or ref.typ == "bool" or ref.typ == "string":
+  if ref.typ == "float" or ref.typ == "string":
     addCode("std::cout << " + ref.code + " << std::endl;\n")
+  elif ref.typ == "bool":
+    addCode("std::cout << (" + ref.code + " ? \"true\" : \"false\") << std::endl;\n")
   else:
     data.error = "print: cannot print composite value"
 

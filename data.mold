@@ -1,0 +1,8 @@
+set namespace "mold_"
+set error ""
+
+# Consts
+set ref_true "tru"
+concat ref_true "e"
+set ref_false "fals"
+concat ref_false "e"

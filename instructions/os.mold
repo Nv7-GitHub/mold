@@ -4,18 +4,21 @@ proc print_instruction
     call ref
 
     switch ref_typ
-    case "float"
-        set addCode_code ""
-        concat addCode_code "printf(\\"%f\\n\", "
-        concat addCode_code ref_code
-        concat addCode_code ");\n"
-        call addCode
-    
+    case "float"  
     case "string"
-        set addCode_code ""
-        concat addCode_code "printf(\"%s\\n\", mold_cstring("
+    case "bool"
+        set addCode_code "std::cout << ("
         concat addCode_code ref_code
-        concat addCode_code "));\n"
+        concat addCode_code " ? \"true\" : \"false\") << std::endl;\n"
         call addCode
+        return
+    default
+        set error "cannot print composite type"
+        return
     end
+
+    set addCode_code "std::cout << "
+    concat addCode_code ref_code
+    concat addCode_code " << std::endl;\n"
+    call addCode
 end

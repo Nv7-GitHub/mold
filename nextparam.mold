@@ -10,7 +10,7 @@ proc get_next_param
   end
 
   # Get param
-  set open_quote false
+  set no_open_quote true
   set nextparam_running true
   set next_param ""
   while nextparam_running
@@ -37,12 +37,13 @@ proc get_next_param
         set isquote false
         eq isquote chr "\"" #"
         if isquote
-          not open_quote
+          not no_open_quote
           set canadd false
         end
 
         # Check if at end
         call ischrspace
+        and chrspace no_open_quote
         if chrspace
           set nextparam_running false
           set canadd false
@@ -53,8 +54,8 @@ proc get_next_param
           concat next_param chr
         end
       end
+      
+      add pos 1
     end
-
-    add pos 1
   end
 end

@@ -2,7 +2,7 @@ set out_top ""
 read out_top lib.cpp
 set out_code ""
 
-set out_fn "\tGC_INIT();\n\targcnt = argc;\n\targval = argv;\n\tsrand(time(0));\n\n"
+set out_fn "\targcnt = argc;\n\targval = argv;\n\n"
 set out_currFn "main"
 set out_currRetType "int"
 
@@ -23,16 +23,22 @@ end
 proc addFn
     # Get argc if in main function
     set addFn_args ""
+    set addFn_name ""
+
     set addFn_isMain false
     eq addFn_isMain out_currFn "main"
     if addFn_isMain
         set addFn_args "int argc, char **argv"
+        set addFn_name "main"
+    else
+        concat addFn_name namespace
+        concat addFn_name out_currFn
     end
 
     # Save out_code
     concat out_code out_currRetType
     concat out_code " "
-    concat out_code out_currFn
+    concat out_code addFn_name
     concat out_code "("
     concat out_code addFn_args
     concat out_code ") {\n"

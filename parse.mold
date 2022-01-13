@@ -7,6 +7,7 @@ proc parse
         end
 
         if parse_running
+            set error ""
             switch next_instr
             case "print"
                 call print_instruction
@@ -15,6 +16,24 @@ proc parse
                 set error_msg "unknown instruction: \"" #"
                 concat error_msg next_instr
                 concat error_msg "\"" #"
+                print error_msg
+                exit 1
+            end
+
+            set parse_haserror false
+            eq parse_haserror error ""
+            not parse_haserror
+            if parse_haserror
+                set error_msg ""
+                concat error_msg file
+                concat error_msg ":"
+
+                set error_num ""
+                itoa error_num line
+                concat error_msg error_num
+
+                concat error_msg ": "
+                concat error_msg error
                 print error_msg
                 exit 1
             end

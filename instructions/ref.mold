@@ -8,6 +8,21 @@ proc ref
     set ref_ctyp ""
     set ref_code ""
 
+    # Bool Check
+    set ref_isBool false
+    set ref_isBoolFalse false
+
+    eq ref_isBool toRef ref_true
+    eq ref_isBoolFalse toRef ref_false
+    or ref_isBool ref_isBoolFalse
+    
+    if ref_isBool
+        set ref_typ "bool"
+        set ref_ctyp "bool"
+        set ref_code toRef
+        return
+    end
+
     set ref_isnumeric false
     numeric ref_isnumeric toRef
     if ref_isnumeric
@@ -18,8 +33,8 @@ proc ref
     end
 
     set ref_typ "string"
-    set ref_ctyp "string*"
-    set ref_code "mold_newstring(\"" #"
+    set ref_ctyp "std::string"
+    set ref_code "\"" #"
     concat ref_code toRef
-    concat ref_code "\")" #"
+    concat ref_code "\"" #"
 end
