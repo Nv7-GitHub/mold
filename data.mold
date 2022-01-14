@@ -14,3 +14,14 @@ concat ref_stack ")"
 # Vartypes
 set vartyps {}
 set varctyps {}
+
+set varexists_var ""
+set varnoexist false
+set vartyp ""
+proc varexists
+  haskey varnoexist vartyps varexists_var
+  if varnoexist
+    getkey vartyp vartyps varexists_var
+  end
+  not varnoexist
+end

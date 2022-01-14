@@ -6,6 +6,10 @@ proc do_next_instr
     case "set"
         call set_instruction
 
+    case "add"
+        set math_op "+"
+        call math_instruction
+
     default
         set error_msg "unknown instruction: \"" #"
         concat error_msg next_instr

@@ -1,0 +1,46 @@
+set math_op ""
+
+proc math_instruction
+  call get_next_param
+  set math_var next_param
+
+  # Var exists?
+  set varexists_var math_var
+  call varexists
+  if varnoexist
+    set error "variable doesn't exist"
+    return
+  end
+
+  set math_typcorr false
+  eq math_typcorr vartyp "float"
+  not math_typcorr
+  if math_typcorr
+    set error "math must use float for variable"
+    return
+  end
+
+  # Value
+  call get_next_param
+  set toRef next_param
+  call ref
+
+  set math_typcorr
+  eq math_typcorr ref_typ "float"
+  not math_typcorr
+  if math_typcorr
+    set error "math must use float for value"
+    return
+  end
+  
+  # Add code
+  set addCode_code ""
+  concat addCode_code namespace
+  concat addCode_code math_var
+  concat addCode_code " "
+  concat addCode_code math_op
+  concat addCode_code "= "
+  concat addCode_code ref_code
+  concat addCode_code ";\n"
+  call addCode
+end

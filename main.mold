@@ -6,6 +6,7 @@ include out.mold
 include instructions/ref.mold
 include instructions/os.mold
 include instructions/variables.mold
+include instructions/math.mold
 include parse.mold
 
 arg file 1
