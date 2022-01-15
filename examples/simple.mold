@@ -1,15 +1,1 @@
-set add_a 0
-set add_b 0
-set add_ret 0
-
-proc add
-  set add_ret 0
-  add add_ret add_a
-  add add_ret add_b
-  return
-end
-
-set add_a 1
-set add_b 2
-call add
-print add_ret
+print "Hello, World!"

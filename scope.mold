@@ -21,4 +21,6 @@ proc end_instruction
       call addFn
       set inproc false
   end
+
+  call popscope
 end
