@@ -46,4 +46,4 @@ def top_instruction():
     data.error = "wrong type for top: " + ref.typ
     return
 
-  addCode(data.namespace + var + " = " + ref.code + ".top();\n")
+  addCode(data.namespace + var + " = " + "lib_mold_top(" + ref.code + ");\n")

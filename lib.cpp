@@ -6,7 +6,7 @@
 #include <stack>
 #include <filesystem>
 
-void lib_mold_error(std::string e) {
+inline void lib_mold_error(std::string e) {
   std::cerr << e << std::endl;
   exit(1);
 }
@@ -23,14 +23,14 @@ std::string lib_mold_arg(float index) {
 }
 
 // Random
-float lib_mold_random(float min, float max) {
+inline float lib_mold_random(float min, float max) {
   static std::random_device rd;
   static std::mt19937 gen(rd());
   std::uniform_real_distribution<> dis(min, max);
   return dis(gen);
 }
 
-float lib_mold_randint(float min, float max) {
+inline float lib_mold_randint(float min, float max) {
   static std::random_device rd;
   static std::mt19937 gen(rd());
   std::uniform_int_distribution<> dis((int)min, (int)max);
@@ -125,5 +125,13 @@ bool lib_mold_numeric(std::string str) {
     }
   }
   return true;
+}
+
+// Stacks
+inline std::string lib_mold_top(std::stack<std::string> stack) {
+  if (stack.size() == 0) {
+    return "";
+  }
+  return stack.top();
 }
 

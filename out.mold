@@ -55,7 +55,7 @@ end
 # New Fn
 set newFn_name ""
 proc newFn
-    set out_currFnRetType "void"
+    set out_currRetType "void"
     set out_currFn newFn_name
 
     set out_mainFn out_fn

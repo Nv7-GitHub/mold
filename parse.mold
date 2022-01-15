@@ -35,6 +35,18 @@ proc do_next_instr
     case "getkey"
         call getkey_instruction
 
+    case "proc"
+        call proc_instruction
+
+    case "end"
+        call end_instruction
+    
+    case "call"
+        call call_instruction
+    
+    case "return"
+        call return_instruction
+
     default
         set error_msg "unknown instruction: \"" #"
         concat error_msg next_instr

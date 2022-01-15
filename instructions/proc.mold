@@ -1,0 +1,51 @@
+proc proc_instruction
+  call getscope
+  set proc_inscope false
+  eq proc_inscope currscope ""
+  not proc_inscope
+  if proc_inscope
+    set error "cannot define procedure within scope"
+    return
+  end
+
+  call get_next_param
+  set newFn_name next_param
+  call newFn
+  set out_indent 1
+  setkey procs next_param ""
+
+  set addscope_scope "proc"
+  call addscope
+  set inproc true
+end
+
+proc return_instruction
+  set return_notinproc inproc
+  not return_notinproc
+  if return_notinproc
+    set error "return statement not in procedure"
+    return
+  end
+
+  set addCode_code "return;\n"
+  call addCode
+end
+
+proc call_instruction
+  call get_next_param
+
+  set call_fnnoexist false
+  haskey call_fnnoexist procs next_param
+  not call_fnnoexist
+  if call_fnnoexist
+    set error "unknown function: "
+    concat error next_param
+    return
+  end
+
+  set addCode_code ""
+  concat addCode_code namespace
+  concat addCode_code next_param
+  concat addCode_code "();\n"
+  call addCode
+end

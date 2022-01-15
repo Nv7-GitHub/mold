@@ -1,0 +1,24 @@
+set scope ()
+set currscope ""
+
+proc getscope
+  top currscope scope
+end
+
+proc popscope
+  pop scope
+end
+
+set addscope_scope ""
+proc addscope
+  push scope addscope_scope
+end
+
+proc end_instruction
+  call getscope
+  switch currscope
+    case "proc"
+      call addFn
+      set inproc false
+  end
+end
