@@ -115,6 +115,10 @@ constexpr u_int32_t lib_mold_fnv_32a_const(const char* s) {
 
 // Strings
 bool lib_mold_numeric(std::string str) {
+  if (str.length() == 0) {
+    return false;
+  }
+  
   for (char c : str) {
     if ((c < '0' || c > '9') && c != '.') {
       return false;

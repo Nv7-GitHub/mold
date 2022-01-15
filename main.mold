@@ -8,6 +8,7 @@ include instructions/os.mold
 include instructions/variables.mold
 include instructions/math.mold
 include instructions/strings.mold
+include instructions/dict.mold
 include parse.mold
 
 arg file 1
