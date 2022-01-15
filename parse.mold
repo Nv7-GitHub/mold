@@ -70,6 +70,18 @@ proc do_next_instr
         set logical_op "||"
         call logical_instruction
 
+    case "if"
+        call if_instruction
+    
+    case "else"
+        call else_instruction
+
+    case "while"
+        call while_instruction
+    
+    case "break"
+        call break_instruction
+
     default
         set error_msg "unknown instruction: \"" #"
         concat error_msg next_instr

@@ -32,6 +32,7 @@ def else_instruction():
   out.indent -= 1
   addCode("} else {\n")
   out.indent += 1
+  done_else = True
 
 def while_instruction():
   cond = get_next_param()

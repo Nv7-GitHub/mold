@@ -1,0 +1,87 @@
+# If
+set done_else false
+proc if_instruction
+  # Get cond
+  call get_next_param
+  set toRef next_param
+  call ref
+  set checkval_typ "bool"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  # Code
+  set addCode_code "if ("
+  concat addCode_code ref_code
+  concat addCode_code ") {\n"
+  call addCode
+
+  add out_indent 1
+  set addscope_scope "if"
+  call addscope
+  set done_else false
+end
+
+# Else
+proc else_instruction
+  call getscope
+  set else_notif false
+  call getscope
+  eq else_notif currscope "if"
+  not else_notif
+  if else_notif
+    set error "else must be within if"
+    return
+  end
+
+  if done_else
+    set error "multiple else statements"
+    return
+  end
+
+  sub out_indent 1
+  set addCode_code "} else {\n"
+  call addCode
+  add out_indent 1
+  set done_else true
+end
+
+# While
+proc while_instruction
+  # Get cond
+  call get_next_param
+  set toRef next_param
+  call ref
+  set checkval_typ "bool"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  # Add code
+  set addCode_code "while ("
+  concat addCode_code ref_code
+  concat addCode_code ") {\n"
+  call addCode
+  
+  add out_indent 1
+  set addscope_scope "while"
+  call addscope
+end
+
+# Break
+proc break_instruction
+  call getscope
+  set break_notwhile false
+  call getscope
+  eq break_notwhile currscope "break"
+  not break_notwhile
+  if break_notwhile
+    set error "break without while"
+    return
+  end
+
+  set addCode_code "break;\n"
+  call addCode
+end

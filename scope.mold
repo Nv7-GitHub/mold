@@ -17,9 +17,19 @@ end
 proc end_instruction
   call getscope
   switch currscope
-    case "proc"
-      call addFn
-      set inproc false
+  case "proc"
+    call addFn
+    set inproc false
+
+  case "if"
+    sub out_indent 1
+    set addCode_code "}\n"
+    call addCode
+
+  case "while"
+    sub out_indent 1
+    set addCode_code "}\n"
+    call addCode
   end
 
   call popscope
