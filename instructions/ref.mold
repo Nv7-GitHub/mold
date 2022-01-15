@@ -72,3 +72,44 @@ proc ref
     concat ref_code toRef
     concat ref_code "\"" #"
 end
+
+set checkvarval ""
+set checkvartyp ""
+set checkvarfail false
+set checkvar_code ""
+proc checkvar
+    set checkvarfail false
+    haskey checkvarfail vartyps checkvarval
+    not checkvarfail
+    if checkvarfail
+        set error "variable doesn't exist"
+        return
+    end
+    
+    set checkvar_vartyp ""
+    getkey checkvar_vartyp vartyps checkvarval
+    set checkvarfail false
+    eq checkvarfail checkvar_vartyp checkvartyp
+    not checkvarfail
+    if checkvarfail
+        set error "variable type incorrect"
+        return
+    end
+
+    set checkvar_code ""
+    concat checkvar_code namespace
+    concat checkvar_code checkvarval
+end
+
+# Utility functions
+set checkval_typ ""
+set checkval_fail false
+proc checkval
+  set checkval_fail false
+  eq checkval_fail ref_typ checkval_typ
+  not checkval_fail
+  if checkval_fail
+    set error "invalid value type"
+    return
+  end
+end

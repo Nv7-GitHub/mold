@@ -1,4 +1,4 @@
-set namespace "mold_"
+set namespace "mold__"
 set error ""
 
 # Consts

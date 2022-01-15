@@ -10,6 +10,25 @@ proc do_next_instr
         set math_op "+"
         call math_instruction
 
+    case "sub"
+        set math_op "-"
+        call math_instruction
+
+    case "mul"
+        set math_op "*"
+        call math_instruction
+
+    case "div"
+        set math_op "/"
+        call math_instruction
+
+    case "mod"
+        set math_op "%"
+        call math_instruction
+
+    case "concat"
+        call concat_instruction
+
     default
         set error_msg "unknown instruction: \"" #"
         concat error_msg next_instr

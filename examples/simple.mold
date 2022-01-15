@@ -1,1 +1,3 @@
-print "Hello, World!"
+set a "Hello, "
+concat a "World!"
+print a
