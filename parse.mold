@@ -47,6 +47,29 @@ proc do_next_instr
     case "return"
         call return_instruction
 
+    case "eq"
+        set comp_op "=="
+        call comp_instruction
+    
+    case "less"
+        set comp_op "<"
+        call comp_instruction
+
+    case "greater"
+        set comp_op ">"
+        call comp_instruction
+
+    case "not"
+        call not_instruction
+    
+    case "and"
+        set logical_op "&&"
+        call logical_instruction
+
+    case "or"
+        set logical_op "||"
+        call logical_instruction
+
     default
         set error_msg "unknown instruction: \"" #"
         concat error_msg next_instr

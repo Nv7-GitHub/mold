@@ -1,0 +1,109 @@
+set comp_op ""
+proc comp_instruction
+  # Var
+  call get_next_param
+  set checkvarval next_param
+  set checkvartyp "bool"
+  call checkvar
+  if checkvarfail
+    return
+  end
+
+  # Val1
+  call get_next_param
+  set toRef next_param
+  call ref
+  set comp_typone ref_typ
+  set comp_codeone ref_code
+
+  # Val2
+  call get_next_param
+  set toRef next_param
+  call ref
+  set comp_typtwo ref_typ
+  set comp_codetwo ref_code
+
+  # Check
+  set comp_typneq false
+  eq comp_typneq comp_typone comp_typtwo
+  not comp_typneq
+  if comp_typneq
+    set error "cannot compare values of different types"
+    return
+  end
+
+  switch comp_typone
+  case "float"
+  case "string"
+  default
+    set error "cannot compare types"
+    return
+  end
+
+  # Code
+  set addCode_code ""
+  concat addCode_code checkvar_code
+  concat addCode_code " = "
+  concat addCode_code comp_codeone
+  concat addCode_code " "
+  concat addCode_code comp_op
+  concat addCode_code " "
+  concat addCode_code comp_codetwo
+  concat addCode_code ";\n"
+  call addCode
+end
+
+# Not
+proc not_instruction
+  # Var
+  call get_next_param
+  set checkvarval next_param
+  set checkvartyp "bool"
+  call checkvar
+  if checkvarfail
+    return
+  end
+
+  # Code
+  set addCode_code ""
+  concat addCode_code checkvar_code
+  concat addCode_code " = !"
+  concat addCode_code checkvar_code
+  concat addCode_code ";\n"
+  call addCode
+end
+
+# Logical ops
+set logical_op ""
+proc logical_instruction
+  # Var
+  call get_next_param
+  set checkvarval next_param
+  set checkvartyp "bool"
+  call checkvar
+  if checkvarfail
+    return
+  end
+
+  # Val
+  call get_next_param
+  set toRef next_param
+  call ref
+  set checkval_typ "bool"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  # Code
+  set addCode_code ""
+  concat addCode_code checkvar_code
+  concat addCode_code " = "
+  concat addCode_code checkvar_code
+  concat addCode_code " "
+  concat addCode_code logical_op
+  concat addCode_code " ("
+  concat addCode_code checkval_code
+  concat addCode_code ");\n"
+  call addCode
+end
