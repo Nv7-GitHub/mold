@@ -13,5 +13,5 @@ from instructions.stack import *
 from tokens import *
 
 def comment_instruction():
-  while not is_paramend():
+  while not is_paramend(False):
     get_next_param()

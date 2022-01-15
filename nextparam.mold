@@ -17,7 +17,17 @@ proc get_next_param
     # at end of param?
     call is_paramend
     if paramend_ret
-      set nextparam_running false
+      if no_open_quote
+        set nextparam_running false
+      else
+        # Comment char in string?
+        set chr_is_comment false
+        eq chr_is_comment chr "#"
+        not chr_is_comment
+        if chr_is_comment
+          set nextparam_running false
+        end
+      end
     end
 
     # if not at end of param

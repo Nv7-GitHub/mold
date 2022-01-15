@@ -93,7 +93,7 @@ def get_next_param():
   param = ""
   while running:
     # Check if at end
-    if is_paramend():
+    if is_paramend(openQuote):
       running = False
 
     # if not at end
@@ -129,5 +129,5 @@ def get_next_param():
       pos += 1
   return param
 
-def is_paramend():
-  return pos >= len(code) or code[pos] == "\n" or code[pos] == "#"
+def is_paramend(openquote):
+  return pos >= len(code) or code[pos] == "\n" or (not openquote and code[pos] == "#")

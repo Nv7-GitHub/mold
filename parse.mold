@@ -82,6 +82,15 @@ proc do_next_instr
     case "break"
         call break_instruction
 
+    case "#"
+        call is_paramend
+        not paramend_ret
+        while paramend_ret
+            call get_next_param
+            call is_paramend
+            not paramend_ret
+        end
+
     default
         set error_msg "unknown instruction: \"" #"
         concat error_msg next_instr
