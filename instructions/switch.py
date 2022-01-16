@@ -6,7 +6,7 @@ import out
 
 need_break = False
 def switch_instruction():
-  global switch_val_code, need_break
+  global need_break
   
   v = get_next_param()
   ref.ref(v)

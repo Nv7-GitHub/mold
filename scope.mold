@@ -30,6 +30,16 @@ proc end_instruction
     sub out_indent 1
     set addCode_code "}\n"
     call addCode
+
+  case "switch"
+    if need_break
+      set addCode_code "break;\n"
+      call addCode
+    end
+    
+    set addCode_code "}\n"
+    sub out_indent 1
+    call addCode
   end
 
   call popscope

@@ -1,0 +1,71 @@
+proc switch_instruction
+  # Get val
+  call get_next_param
+  set toRef next_param
+  call ref
+  set checkval_typ "string"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  # Code
+  set addCode_code "switch (lib_mold_fnv_32a("
+  concat addCode_code ref_code
+  concat addCode_code ")) {\n"
+  call addCode
+
+  # Scope
+  add out_indent 1
+  set need_break false
+  set addscope_scope "switch"
+  call addscope
+end
+
+proc case_instruction
+  call getscope
+  set case_is_switch false
+  eq case_is_switch currscope "switch"
+  not case_is_switch
+  if case_is_switch
+    set error "cannot use case outside of switch"
+    return
+  end
+
+  if need_break
+    set addCode_code "break;\n"
+    call addCode
+  end
+
+  call get_next_param
+  set addCode_code "case lib_mold_fnv_32a_const(\"" #"
+  concat addCode_code next_param
+  concat addCode_code "\"):\n" #"
+
+  sub out_indent 1
+  call addCode
+  add out_indent 1
+  set need_break true
+end
+
+proc default_instruction
+  call getscope
+  set case_is_switch false
+  eq case_is_switch currscope "switch"
+  not case_is_switch
+  if case_is_switch
+    set error "cannot use case outside of switch"
+    return
+  end
+
+  if need_break
+    set addCode_code "break;\n"
+    call addCode
+  end
+
+  sub out_indent 1
+  set addCode_code "default:\n"
+  call addCode
+  add out_indent 1
+  set need_break true
+end

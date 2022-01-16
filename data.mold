@@ -29,3 +29,6 @@ end
 # Procedures
 set inproc false
 set procs {}
+
+# Switch
+set need_break false

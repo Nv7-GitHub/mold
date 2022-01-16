@@ -1,1 +1,32 @@
-print "Hello, World!"
+# Handlers
+proc when_foo
+  print "It was foo!"
+end
+
+proc when_bar
+  print "It was bar!"
+end
+
+proc _default
+  print "Default"
+end
+
+# Switch
+set val ""
+proc switch
+  switch val
+    case "foo"
+      call when_foo
+    case "bar" 
+      call when_bar
+    default 
+      call _default
+  end
+end
+
+set val "foo"
+call switch
+set val "bar"
+call switch
+set val "abc"
+call switch

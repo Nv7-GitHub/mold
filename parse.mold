@@ -91,6 +91,15 @@ proc do_next_instr
             not paramend_ret
         end
 
+    case "switch"
+        call switch_instruction
+
+    case "case"
+        call case_instruction
+
+    case "default"
+        call default_instruction
+
     default
         set error_msg "unknown instruction: \"" #"
         concat error_msg next_instr
