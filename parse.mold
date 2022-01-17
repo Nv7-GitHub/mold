@@ -1,3 +1,8 @@
+set oldFile ""
+set oldCode ""
+set oldLine 0
+set oldPos 0
+
 proc do_next_instr
     switch next_instr
     case "print"
@@ -100,6 +105,70 @@ proc do_next_instr
     case "default"
         call default_instruction
 
+    case "include"
+        # Save old file
+        set in_imported false
+        eq in_imported oldFile ""
+        not in_imported
+        if in_imported
+            set error "cannot import from imported file"
+            return
+        end
+
+        set oldCode code
+        set oldFile file
+        set oldPos pos
+        set oldLine line
+
+        # Read
+        call get_next_param
+        set file next_param
+        read code file
+        set pos 0
+        set line 0
+
+        # From below
+        set include_parse_running true
+        while include_parse_running
+            call next_instruction
+            if outofrange
+                set include_parse_running false
+            end
+
+            if include_parse_running
+                set error ""
+                call do_next_instr
+
+                set parse_haserror false
+                eq parse_haserror error ""
+                not parse_haserror
+                if parse_haserror
+                    set error_msg ""
+                    concat error_msg file
+                    concat error_msg ":"
+
+                    set error_num ""
+                    itoa error_num line
+                    concat error_msg error_num
+
+                    concat error_msg ": "
+                    concat error_msg error
+                    print error_msg
+                    exit 1
+                end
+            end
+        end
+
+        # Prev file
+        set code oldCode
+        set file oldFile
+        set line oldLine
+        set pos oldPos
+        set oldCode ""
+        set oldFile ""
+        set oldLine 0
+        set oldPos 0
+        
     default
         set error_msg "unknown instruction: \"" #"
         concat error_msg next_instr
