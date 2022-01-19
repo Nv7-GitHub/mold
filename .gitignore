@@ -156,5 +156,6 @@ cython_debug/
 out.cpp
 a.out
 out
+out2
 mold
 mold.cpp

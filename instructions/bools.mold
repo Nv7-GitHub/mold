@@ -103,7 +103,7 @@ proc logical_instruction
   concat addCode_code " "
   concat addCode_code logical_op
   concat addCode_code " ("
-  concat addCode_code checkval_code
+  concat addCode_code ref_code
   concat addCode_code ");\n"
   call addCode
 end

@@ -1,5 +1,6 @@
-python3 main.py main.mold mold > mold.cpp
+python3 main.py main.mold mold > mold.cpp # Python: Src => mold
 echo "Built from Python"
-./mold examples/simple.mold out
+./mold main.mold out # Mold: Src => out
 echo "Built from mold"
-./out
+./out main.mold out2 # Mold (self compiled): Src => out2
+echo "Built from mold (self compiled)"
