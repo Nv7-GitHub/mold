@@ -23,6 +23,56 @@ proc print_instruction
     call addCode
 end
 
+proc exit_instruction
+  # Code
+  call get_next_param
+  set toRef next_param
+  call ref
+  
+  set checkval_typ "float"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  # Code
+  set addCode_code "exit((int)("
+  concat addCode_code ref_code
+  concat addCode_code "));\n"
+  call addCode
+end
+
+proc cmd_instruction
+  # Var
+  call get_next_param
+  set checkvarval next_param
+  set checkvartyp "string"
+  call checkvar
+  if checkvarfail
+    return
+  end
+
+  # Val
+  call get_next_param
+  set toRef next_param
+  call ref
+  
+  set checkval_typ "string"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  # Code
+  set addCode_code ""
+  concat addCode_code checkvar_code
+  concat addCode_code " = lib_mold_system("
+  concat addCode_code ref_code
+  concat addCode_code ");\n"
+  call addCode
+end
+
+
 proc arg_instruction
   # Var
   call get_next_param
@@ -52,3 +102,89 @@ proc arg_instruction
   concat addCode_code "));\n"
   call addCode
 end
+
+# Filesystem
+proc rm_instruction
+  # File
+  call get_next_param
+  set toRef next_param
+  call ref
+  
+  set checkval_typ "string"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  # Code
+  set addCode_code "lib_mold_remove("
+  concat addCode_code ref_code
+  concat addCode_code ");\n"
+  call addCode
+end
+
+proc read_instruction
+  # Var
+  call get_next_param
+  set checkvarval next_param
+  set checkvartyp "string"
+  call checkvar
+  if checkvarfail
+    return
+  end
+
+  # Val
+  call get_next_param
+  set toRef next_param
+  call ref
+  
+  set checkval_typ "string"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  # Code
+  set addCode_code ""
+  concat addCode_code checkvar_code
+  concat addCode_code " = lib_mold_read("
+  concat addCode_code ref_code
+  concat addCode_code ");\n"
+  call addCode
+end
+
+
+proc write_instruction
+  # File
+  call get_next_param
+  set toRef next_param
+  call ref
+  
+  set checkval_typ "string"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  set write_filename ref_code
+
+  # Val
+  call get_next_param
+  set toRef next_param
+  call ref
+  
+  set checkval_typ "string"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  # Code
+  set addCode_code "lib_mold_write("
+  concat addCode_code write_filename
+  concat addCode_code ", "
+  concat addCode_code ref_code
+  concat addCode_code ");\n"
+  call addCode
+end
+

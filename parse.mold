@@ -133,6 +133,21 @@ proc do_next_instr
 
     case "ind"
         call ind_instruction
+    
+    case "exit"
+        call exit_instruction
+
+    case "rm"
+        call rm_instruction
+
+    case "cmd"
+        call cmd_instruction
+
+    case "read"
+        call read_instruction
+
+    case "write"
+        call write_instruction
 
     case "include"
         # Save old file
