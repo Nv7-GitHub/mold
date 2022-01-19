@@ -86,3 +86,50 @@ proc getkey_instruction
   concat addCode_code "];\n"
   call addCode
 end
+
+proc haskey_instruction
+  # Value
+  call get_next_param
+  set checkvarval next_param
+  set checkvartyp "bool"
+  call checkvar
+  if checkvarfail
+    return
+  end
+
+  # Dict
+  call get_next_param
+  set toRef next_param
+  call ref
+
+  set checkval_typ "dict"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  set getkey_dictcode ref_code
+
+  # Key
+  call get_next_param
+  set toRef next_param
+  call ref
+
+  set checkval_typ "string"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  # Add code
+  set addCode_code ""
+  concat addCode_code checkvar_code
+  concat addCode_code " = "
+  concat addCode_code getkey_dictcode
+  concat addCode_code ".find("
+  concat addCode_code ref_code
+  concat addCode_code ") != "
+  concat addCode_code getkey_dictcode
+  concat addCode_code ".end();\n"
+  call addCode
+end

@@ -96,6 +96,36 @@ proc atof_instruction
   call addCode
 end
 
+proc numeric_instruction
+  # Var
+  call get_next_param
+  set checkvarval next_param
+  set checkvartyp "bool"
+  call checkvar
+  if checkvarfail
+    return
+  end
+
+  # Val
+  call get_next_param
+  set toRef next_param
+  call ref
+  
+  set checkval_typ "string"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  # Code
+  set addCode_code ""
+  concat addCode_code checkvar_code
+  concat addCode_code " = lib_mold_numeric("
+  concat addCode_code ref_code
+  concat addCode_code ");\n"
+  call addCode
+end
+
 # String ops
 proc length_instruction
   # Var

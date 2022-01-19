@@ -1,1 +1,16 @@
-print "Hello, World!"
+set a {} # Blank dictionary only
+setkey a "Hi" "Hello"
+
+set val ""
+getkey val a "Hi"
+print val
+
+setkey a "Hi" "Cool!"
+getkey val a "Hi"
+print val
+
+set contains false
+haskey contains a "Hi"
+print contains # Should print true
+
+getkey val a "Unknown"

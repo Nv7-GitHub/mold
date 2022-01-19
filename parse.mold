@@ -157,6 +157,12 @@ proc do_next_instr
         set rand_int true
         call rand_instruction
 
+    case "numeric"
+        call numeric_instruction
+
+    case "haskey"
+        call haskey_instruction
+
     case "include"
         # Save old file
         set in_imported false
