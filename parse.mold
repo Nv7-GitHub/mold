@@ -149,6 +149,14 @@ proc do_next_instr
     case "write"
         call write_instruction
 
+    case "rand"
+        set rand_int false
+        call rand_instruction
+
+    case "irand"
+        set rand_int true
+        call rand_instruction
+
     case "include"
         # Save old file
         set in_imported false

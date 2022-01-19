@@ -30,3 +30,58 @@ proc math_instruction
   concat addCode_code ";\n"
   call addCode
 end
+
+set rand_int false
+proc rand_instruction
+  # VAl
+  call get_next_param
+  set checkvarval next_param
+  set checkvartyp "float"
+  call checkvar
+  if checkvarfail
+    return
+  end
+
+  # Low
+  call get_next_param
+  set toRef next_param
+  call ref
+  
+  set checkval_typ "float"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  set rand_lowcode ref_code
+  
+  # High
+  call get_next_param
+  set toRef next_param
+  call ref
+  
+  set checkval_typ "float"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  set rand_highcode ref_code
+
+  # Add code
+  set rand_fn "lib_mold_random"
+  if rand_int
+    set rand_fn "lib_mold_randint"
+  end
+
+  set addCode_code ""
+  concat addCode_code checkvar_code
+  concat addCode_code " = "
+  concat addCode_code rand_fn
+  concat addCode_code "("
+  concat addCode_code rand_lowcode
+  concat addCode_code ", "
+  concat addCode_code rand_highcode
+  concat addCode_code ");\n"
+  call addCode
+end
