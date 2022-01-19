@@ -1,0 +1,76 @@
+proc push_instruction
+  # Stack val
+  call get_next_param
+  set checkvarval next_param
+  set checkvartyp "stack"
+  call checkvar
+  if checkvarfail
+    return
+  end
+
+  # Val
+  call get_next_param
+  set toRef next_param
+  call ref
+  
+  set checkval_typ "string"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  # Code
+  set addCode_code ""
+  concat addCode_code checkvar_code
+  concat addCode_code ".push("
+  concat addCode_code ref_code
+  concat addCode_code ");\n"
+  call addCode
+end
+
+proc pop_instruction
+  # Stack val
+  call get_next_param
+  set checkvarval next_param
+  set checkvartyp "stack"
+  call checkvar
+  if checkvarfail
+    return
+  end
+
+  # Code
+  set addCode_code ""
+  concat addCode_code checkvar_code
+  concat addCode_code ".pop();\n"
+  call addCode
+end
+
+proc top_instruction
+  # Target val
+  call get_next_param
+  set checkvarval next_param
+  set checkvartyp "string"
+  call checkvar
+  if checkvarfail
+    return
+  end
+
+  # Val
+  call get_next_param
+  set toRef next_param
+  call ref
+  
+  set checkval_typ "stack"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  # Code
+  set addCode_code ""
+  concat addCode_code checkvar_code
+  concat addCode_code " = lib_mold_top("
+  concat addCode_code ref_code
+  concat addCode_code ");\n"
+  call addCode
+end

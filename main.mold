@@ -14,6 +14,7 @@ include instructions/proc.mold
 include instructions/bools.mold
 include instructions/blocks.mold
 include instructions/switch.mold
+include instructions/stack.mold
 include parse.mold
 
 arg file 1

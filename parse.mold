@@ -105,6 +105,15 @@ proc do_next_instr
     case "default"
         call default_instruction
 
+    case "push"
+        call push_instruction
+
+    case "pop"
+        call pop_instruction
+
+    case "top"
+        call top_instruction
+
     case "include"
         # Save old file
         set in_imported false
