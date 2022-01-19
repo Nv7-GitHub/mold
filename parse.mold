@@ -114,6 +114,26 @@ proc do_next_instr
     case "top"
         call top_instruction
 
+    case "ftoa"
+        set numfmt_int false
+        call numfmt_instruction
+    
+    case "itoa"
+        set numfmt_int true
+        call numfmt_instruction
+
+    case "atof"
+        call atof_instruction
+
+    case "length"
+        call length_instruction
+
+    case "arg"
+        call arg_instruction
+
+    case "ind"
+        call ind_instruction
+
     case "include"
         # Save old file
         set in_imported false

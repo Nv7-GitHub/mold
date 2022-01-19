@@ -26,3 +26,148 @@ proc concat_instruction
   concat addCode_code ";\n"
   call addCode
 end
+
+
+# Number formatting
+set numfmt_int false
+proc numfmt_instruction
+  # Var
+  call get_next_param
+  set checkvarval next_param
+  set checkvartyp "string"
+  call checkvar
+  if checkvarfail
+    return
+  end
+
+  # Val
+  call get_next_param
+  set toRef next_param
+  call ref
+  
+  set checkval_typ "float"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  # Code
+  set addCode_code ""
+  concat addCode_code checkvar_code
+  concat addCode_code " = std::to_string("
+  if numfmt_int
+    concat addCode_code "(int)("
+  end
+  concat addCode_code ref_code
+  if numfmt_int
+    concat addCode_code ")"
+  end
+  concat addCode_code ");\n"
+  call addCode
+end
+
+proc atof_instruction
+  # Var
+  call get_next_param
+  set checkvarval next_param
+  set checkvartyp "float"
+  call checkvar
+  if checkvarfail
+    return
+  end
+
+  # Val
+  call get_next_param
+  set toRef next_param
+  call ref
+  
+  set checkval_typ "string"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  # Code
+  set addCode_code ""
+  concat addCode_code checkvar_code
+  concat addCode_code " = std::stof("
+  concat addCode_code ref_code
+  concat addCode_code ");\n"
+  call addCode
+end
+
+# String ops
+proc length_instruction
+  # Var
+  call get_next_param
+  set checkvarval next_param
+  set checkvartyp "float"
+  call checkvar
+  if checkvarfail
+    return
+  end
+
+  # Val
+  call get_next_param
+  set toRef next_param
+  call ref
+  
+  set checkval_typ "string"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  # Code
+  set addCode_code ""
+  concat addCode_code checkvar_code
+  concat addCode_code " = (float)("
+  concat addCode_code ref_code
+  concat addCode_code ").length();\n"
+  call addCode
+end
+
+proc ind_instruction
+  # Var
+  call get_next_param
+  set checkvarval next_param
+  set checkvartyp "string"
+  call checkvar
+  if checkvarfail
+    return
+  end
+
+  # Val
+  call get_next_param
+  set toRef next_param
+  call ref
+  
+  set checkval_typ "string"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  set ind_valone ref_code
+
+  # Index
+  call get_next_param
+  set toRef next_param
+  call ref
+  
+  set checkval_typ "float"
+  call checkval
+  if checkval_fail
+    return
+  end
+
+  # Code
+  set addCode_code ""
+  concat addCode_code checkvar_code
+  concat addCode_code " = ("
+  concat addCode_code ind_valone
+  concat addCode_code ")[(int)("
+  concat addCode_code ref_code
+  concat addCode_code ")];\n"
+  call addCode
+end
